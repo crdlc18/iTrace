@@ -23,7 +23,7 @@
 
             <button type="button" id="CancelBtn">Cancel</button>
             <button type="button" id="LogInBtn">LogIn</button>
-            <p class="message">Forgot your Password? <a href="#">Reset your password</a></p>
+            <p class="message" id="forgetPass">Forgot your Password? <a href="#">Reset your password</a></p>
         </form>
     </div>
     
@@ -76,5 +76,10 @@
 
     $("#CancelBtn").on('click', function(){
         window.location.href = "adminLogIn.html";
+    });
+
+    $("#forgetPass").on('click', function(){
+        alert("This is an alert message box.");
+        
     });
 </script>

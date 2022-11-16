@@ -70,7 +70,7 @@ require("db_con/connection.php");
             'apikey' => '300d7ae7eac75ab9b1535a3d7842bef1', //Your API KEY
             'number' => [], 
             'message' => 'The PUP admin has recognized you as a COVID suspect. You are advised
-                          to undergo self-quarantine. Please reach out to the PUP medical office
+                          to undergo self-quarantine. Please reach out to the PUP Medical Office
                           for further advisories.',
             'sendername' => 'SEMAPHORE'
        ];
