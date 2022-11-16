@@ -100,7 +100,7 @@
         
        if(!newName){
             $('#modal .modal-title').html("..Oooppss");
-            $('#modal .modal-body').html("Name cannot be blank");
+            $('#modal .modal-body').html("Name cannot be blank.");
             $('#modal').modal('show');
        }
        else if(!newEmail){
@@ -126,7 +126,7 @@
                 }
                 else if (newPass!=conPass){
                     $('#modal .modal-title').html("..Oooppss");
-                    $('#modal .modal-body').html("New password and confirm password are not matched.");
+                    $('#modal .modal-body').html("New password and confirm password do not match.");
                     $('#modal').modal('show');
                 }
                 else{
