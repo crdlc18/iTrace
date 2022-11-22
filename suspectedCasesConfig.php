@@ -1,6 +1,6 @@
 <?php 
 
-   /// ------------------------------------- ON GOING--------------------------------------------------//
+   /// ------------------------------------TO BE CHECKED--------------------------------------------------//
     require("db_con/connection.php");
 
     date_default_timezone_set('Asia/Manila');
@@ -8,7 +8,7 @@
 
 if(isset($_POST['viewstat'])){
         // identify suspect/s
-        $sql1 = "SELECT * FROM attend_log WHERE (InTemp_celsius>=37.8 OR OutTemp_celsius>=37.8) AND attendDate=?";
+        $sql1 = "SELECT * FROM attend_log WHERE (InTemp_celsius>=37.85 OR OutTemp_celsius>=37.85) AND attendDate=?";
         $result1 = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($result1, $sql1)) {
             
@@ -122,7 +122,7 @@ if(isset($_POST['viewstat'])){
                 }
             }
             else{
-                echo "NO SUSPECTS AND CLOSE CONTACTS";
+                echo '0';
             }
         }
 }

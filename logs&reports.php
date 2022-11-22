@@ -209,25 +209,35 @@ $(document).ready(function(){
 
     //------------------------ VIEW CASES BUTTON---------------------------------
     $(document).on('click', '#viewSuspectBtn',function(){
-       
+
         jQuery.ajax({
             url:'suspectedCasesConfig.php',
-        }).done(function(data){
-
-            jQuery.ajax({
-                url:'loadSuspectedCases.php',
-                data: {viewstat:1},
-            }).done(function(res){
-                $('#viewSuspectedModal .modal-body').html(res);
-                $('#viewSuspectedModal').modal('show');
-            });
+            data: {viewstat:1},
+            type: 'POST',
+            dataType: 'text',
+            success:function(data){
+                if (data=='0'){
+                   $('#viewSuspectedModal .modal-body').html('No suspects for today');
+                   $('#viewSuspectedModal').modal('show');
+                }
+                else{
+                    jQuery.ajax({
+                        url:'loadSuspectedCases.php',
+                        dataType:'text',
+                        success:function(res){
+                            $('#viewSuspectedModal .modal-body').html(res);
+                            $('#viewSuspectedModal').modal('show');
+                            $('#notifyBtn').prop('disabled', false);
+                        }
+                    });
+                }
+            }
         });
     });
-
 });
 
 // for sending sms 
-/*function notifySuspects(){
+function notifySuspects(){
     jQuery.ajax({
         url:'sendSMS.php',
         type:'POST',
@@ -238,6 +248,6 @@ $(document).ready(function(){
             $('#modal').modal('show');
         }
     });
-}*/
+}
 
 </script>
