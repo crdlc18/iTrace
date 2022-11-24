@@ -11,10 +11,10 @@
         $content=mysqli_fetch_assoc($query);
     
         $name=$content['adminFullName'];
-        $currPass=$content['passwrd'];
+        $currPass=$content['adminPassword'];
         $email=$content['adminEmail'];
                                 
-        $return_arr[]=["name"=>$name, "currPass" =>$currPass, "email"=>$email];
+        $return_arr[]=["name"=>$name, "currPass" =>$currPass, "uMail"=>$email];
     
         ob_end_clean();
         echo json_encode($return_arr);
@@ -35,7 +35,7 @@
         }
         else{
 
-            mysqli_query($conn, "UPDATE admin_T SET adminFullName = '$newName', adminEmail='$newEmail', passwrd='$newPass' 
+            mysqli_query($conn, "UPDATE admin_T SET adminFullName = '$newName', adminEmail='$newEmail', adminPassword='$newPass' 
             WHERE adminNo={$_SESSION['adminID']}") or die($conn->error);
         }
 
@@ -57,7 +57,7 @@
             }
             else{
                 
-                mysqli_query($conn, "INSERT INTO admin_T (adminFullName, adminEmail, passwrd) VALUES ('$adminName', '$adminEmail', '$adminPass')");
+                mysqli_query($conn, "INSERT INTO admin_T (adminFullName, adminEmail, adminPassword) VALUES ('$adminName', '$adminEmail', '$adminPass')");
                 echo "success";
             }
         $conn->close();

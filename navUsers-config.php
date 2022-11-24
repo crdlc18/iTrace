@@ -7,19 +7,19 @@
          $fname = $_POST['fname'];
          $mname = $_POST['mname'];
          $lname  = $_POST['lname'];
-         $email = $_POST['email'];
-         $contactNo = '+639'.$_POST['contactNo'];
-         $address = $_POST['address'];
+         $email = $_POST['uMail'];
+         $contactNo = '+639'.$_POST['uContactNo'];
+         $address = $_POST['uAddress'];
          //additional info
-         $gender = $_POST['gender'];
-         $userRole = $_POST['userRole'];
-         $dept = $_POST['dept'];
+         $gender = $_POST['uGender'];
+         $userRole = $_POST['uRole'];
+         $dept = $_POST['uDept'];
          $userID= $_POST['userID'];
 
          $count= $_POST['count'];
 
           //check if there are any selected user
-        $sql = "SELECT addCard FROM user_t WHERE count=?";
+        $sql = "SELECT cardAdd FROM user_t WHERE count=?";
         $result = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($result, $sql)) {
             echo "SQL_Error";
@@ -32,9 +32,9 @@
             $resultl = mysqli_stmt_get_result($result);
             if ($row = mysqli_fetch_assoc($resultl)) {
 
-                if(!($row['addCard']==1)){
+                if(!($row['cardAdd']==1)){
                     //check if there are any user with same user ID 
-                    $sql = "SELECT addCard FROM user_t WHERE roleID=? AND count NOT LIKE ?";
+                    $sql = "SELECT cardAdd FROM user_t WHERE uID=? AND count NOT LIKE ?";
                     $result = mysqli_stmt_init($conn);
                     if (!mysqli_stmt_prepare($result, $sql)) {
                         echo "SQL_Error";
@@ -46,9 +46,9 @@
                         $resultl = mysqli_stmt_get_result($result);
                         if (!$row = mysqli_fetch_assoc($resultl)) {
 
-                            $sql="UPDATE user_t SET fName=?, mName=?, sName=?, gender=?, userRole=?,
-                             roleID=?, dept=?, email=?, contactNo=?, address=?, regDate=CURDATE(),
-                             addCard=1 WHERE count=?";
+                            $sql="UPDATE user_t SET uFN=?, uMN=?, uLN=?, uGender=?, uRole=?,
+                             uID=?, uDept=?, uMail=?, uContactNo=?, uAddress=?, regDate=CURDATE(),
+                             cardAdd=1 WHERE count=?";
                             $result = mysqli_stmt_init($conn);
                             if (!mysqli_stmt_prepare($result, $sql)) {
                                 echo "SQL_Error_select_Fingerprint";
@@ -89,19 +89,19 @@ if (isset($_POST['update_user'])) {
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
     $lname  = $_POST['lname'];
-    $email = $_POST['email'];
-    $contactNo = '+639'.$_POST['contactNo'];
-    $address = $_POST['address'];
+    $email = $_POST['uMail'];
+    $contactNo = '+639'.$_POST['uContactNo'];
+    $address = $_POST['uAddress'];
     //additional info
-    $gender = $_POST['gender'];
-    $userRole = $_POST['userRole'];
-    $dept = $_POST['dept'];
+    $gender = $_POST['uGender'];
+    $userRole = $_POST['uRole'];
+    $dept = $_POST['uDept'];
     $userID= $_POST['userID'];
 
     $count= $_POST['count'];
 
     //check if there's any selected user
-    $sql = "SELECT addCard FROM user_t WHERE count=?";
+    $sql = "SELECT cardAdd FROM user_t WHERE count=?";
     $result = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($result, $sql)) {
       echo "SQL_Error";
@@ -113,13 +113,13 @@ if (isset($_POST['update_user'])) {
         $resultl = mysqli_stmt_get_result($result);
         if ($row = mysqli_fetch_assoc($resultl)) {
 
-            if ($row['addCard'] == 0) {
+            if ($row['cardAdd'] == 0) {
                 echo "User is not yet registered. Please Add the user first!";
                 exit();
             }
             else{
                  //check if there's already a user with same user (role) ID
-                 $sql = "SELECT addCard FROM user_t WHERE roleID=? AND count NOT LIKE ?";
+                 $sql = "SELECT cardAdd FROM user_t WHERE uID=? AND count NOT LIKE ?";
                  $result = mysqli_stmt_init($conn);
                  if (!mysqli_stmt_prepare($result, $sql)) {
                      echo "SQL_Error";
@@ -131,9 +131,9 @@ if (isset($_POST['update_user'])) {
                     $resultl = mysqli_stmt_get_result($result);
                     if (!$row = mysqli_fetch_assoc($resultl)) {
                        
-                        $sql="UPDATE user_t SET fName=?, mName=?, sName=?, gender=?, userRole=?,
-                         roleID=?, dept=?, email=?, contactNo=?, address=?, regDate=CURDATE(),
-                         addCard=1 WHERE count=?";
+                        $sql="UPDATE user_t SET uFN=?, uMN=?, uLN=?, uGender=?, uRole=?,
+                         uID=?, uDept=?, uMail=?, uContactNo=?, uAddress=?, regDate=CURDATE(),
+                         cardAdd=1 WHERE count=?";
                         $result = mysqli_stmt_init($conn);
                         if (!mysqli_stmt_prepare($result, $sql)) {
                             echo "SQL_Error_select_Fingerprint";
@@ -187,9 +187,9 @@ if (isset($_POST['update_user'])) {
 // select 
 if (isset($_GET['select'])) {
 
-    $RFID_no = $_GET['RFID_no'];
+    $RFID_no = $_GET['RFIDno'];
 
-    $sql = "SELECT * FROM user_t WHERE RFID_no=?";
+    $sql = "SELECT * FROM user_t WHERE RFIDno=?";
     $result = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($result, $sql)) {
         echo "SQL_Error_Select";
@@ -217,11 +217,11 @@ if (isset($_GET['select'])) {
 //----------- CHECKING EMAIL AND CONTACT INFORMATION AVAILABILITY WHEN USER INFOR IS TO BE ADDED/UPDATED --------------//
 
  if (isset($_POST['checkEmail'])){  
-    $email = $_POST['email'];
+    $email = $_POST['uMail'];
     $count = $_POST['count'];
    
 
-        $query = mysqli_query($conn,"SELECT * FROM user_t WHERE email='$email' AND NOT count='$count'") or die($conn->error);
+        $query = mysqli_query($conn,"SELECT * FROM user_t WHERE uMail='$email' AND NOT count='$count'") or die($conn->error);
         if(mysqli_num_rows($query)>0) {
             echo "invalid";
         }else{
@@ -230,10 +230,10 @@ if (isset($_GET['select'])) {
  }
 
  if (isset($_POST['checkContact'])){
-    $contactNo = "+639".$_POST['contactNo'];
+    $contactNo = "+639".$_POST['uContactNo'];
     echo"$contactNo";
 
-    $query = mysqli_query($conn,"SELECT * FROM user_t WHERE contactNo='$contactNo' AND NOT count='$count'") or die($conn->error);
+    $query = mysqli_query($conn,"SELECT * FROM user_t WHERE uContactNo='$contactNo' AND NOT count='$count'") or die($conn->error);
 
     if(mysqli_num_rows($query)>0) {
         echo "invalid";

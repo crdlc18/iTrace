@@ -8,7 +8,7 @@
 
 if(isset($_POST['viewstat'])){
         // identify suspect/s
-        $sql1 = "SELECT * FROM attend_log WHERE (InTemp_celsius>=37.85 OR OutTemp_celsius>=37.85) AND attendDate=?";
+        $sql1 = "SELECT * FROM logs_t WHERE (tempIn>=37.85 OR tempOut>=37.85) AND logDate=?";
         $result1 = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($result1, $sql1)) {
             
@@ -24,14 +24,14 @@ if(isset($_POST['viewstat'])){
             if (mysqli_num_rows($res1) > 0){
 
                 while ($row = mysqli_fetch_assoc($res1)){
-                    $suspect = $row['RFID_no'];
+                    $suspect = $row['RFIDno'];
 
                     //for testing only , delete if final
                     //echo"<br> Suspect: $suspect <br>";
                    
                     
                     //update covid status of the suspect/s
-                   $sql2="UPDATE user_t SET covidStat=1 WHERE RFID_no = ?";
+                   $sql2="UPDATE user_t SET covidStat=1 WHERE RFIDno = ?";
                     $result2 = mysqli_stmt_init($conn);
 
                     if (!mysqli_stmt_prepare($result2, $sql2)) {
@@ -49,8 +49,8 @@ if(isset($_POST['viewstat'])){
                         $startDate= date_format($date,"Y-m-d");
                     
                         //get the rooms where the suspect/s entered from 2 days prior to their identification
-                        $sql3 = "SELECT RoomID, timeIn, timeOut FROM attend_log ATT JOIN user_t UT 
-                        ON ATT.RFID_no = UT.RFID_no WHERE ATT.RFID_no=? AND attendDate BETWEEN ? AND ?";
+                        $sql3 = "SELECT roomID, timeIn, timeOut FROM logs_t ATT JOIN user_t UT 
+                        ON ATT.RFIDno = UT.RFIDno WHERE ATT.RFIDno=? AND logDate BETWEEN ? AND ?";
 
 
                         $result3 = mysqli_stmt_init($conn);
@@ -67,15 +67,15 @@ if(isset($_POST['viewstat'])){
 
                                 while ($item = mysqli_fetch_assoc($res3)){
                                     //for testing only , delete if final
-                                    // echo "<br> Affected Room/s <br> {$item['RoomID']} , {$item['timeIn']} , {$item['timeOut']}<br>";
+                                    // echo "<br> Affected Room/s <br> {$item['roomID']} , {$item['timeIn']} , {$item['timeOut']}<br>";
                                     
-                                     $room = $item['RoomID'];
+                                     $room = $item['roomID'];
                                      $in = $item['timeIn'];
                                      $out = $item['timeOut'];
                                      // select records on the same room within the suspect's time duration of occupancy (>=15 mins exposure)
-                                    $sql4 = "SELECT ATT.RFID_no, RoomID, timeIn, timeOut FROM attend_log ATT JOIN user_t UT ON ATT.RFID_no = UT.RFID_no
-                                              WHERE covidStat!=1 AND RoomID =? 
-                                              AND attendDate BETWEEN ? AND ? 
+                                    $sql4 = "SELECT ATT.RFIDno, roomID, timeIn, timeOut FROM logs_t ATT JOIN user_t UT ON ATT.RFIDno = UT.RFIDno
+                                              WHERE covidStat!=1 AND roomID =? 
+                                              AND logDate BETWEEN ? AND ? 
                                               AND timeIn>=? AND timeOut= ?";
      
                                     $result4 = mysqli_stmt_init($conn);
@@ -91,15 +91,15 @@ if(isset($_POST['viewstat'])){
 
                                         if (mysqli_num_rows($res4) > 0){
                                             while ($data = mysqli_fetch_assoc($res4)){
-                                                $closeContact=$data['RFID_no'];
+                                                $closeContact=$data['RFIDno'];
 
                                                   //for testing only , delete if final
-                                               // echo "<br> Close Contact/s <br> {$data['RFID_no']}, {$data['RoomID']} , 
+                                               // echo "<br> Close Contact/s <br> {$data['RFIDno']}, {$data['roomID']} , 
                                                        // {$data['timeIn']} , {$data['timeOut']} <br>";
 
 
                                                  //update covid status of the close contacts
-                                                $sql5="UPDATE user_t SET covidStat=2 WHERE RFID_no = ?";
+                                                $sql5="UPDATE user_t SET covidStat=2 WHERE RFIDno = ?";
                                                 $result5 = mysqli_stmt_init($conn);
 
                                                 if (!mysqli_stmt_prepare($result5, $sql5)) {

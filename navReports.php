@@ -86,7 +86,7 @@
                             <select class="userSel" name="userSel" id="userSel">
                                 <option value="allUser">All Users</option>
                                 <?php
-                                    $sql = "SELECT DISTINCT userRole FROM user_T";
+                                    $sql = "SELECT DISTINCT uRole FROM user_T";
                                     $result = mysqli_stmt_init($conn);
                                     if (!mysqli_stmt_prepare($result, $sql)) {
                                         echo 'SQL Error';
@@ -96,7 +96,7 @@
                                         $resultl = mysqli_stmt_get_result($result);
                                         while ($row = mysqli_fetch_assoc($resultl)){
                                 ?>
-                                        <option value="<?php echo $row['userRole'];?>"><?php echo $row['userRole']; ?></option>
+                                        <option value="<?php echo $row['uRole'];?>"><?php echo $row['uRole']; ?></option>
                                 <?php
                                         }
                                     }

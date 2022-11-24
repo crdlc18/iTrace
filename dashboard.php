@@ -40,7 +40,7 @@
                         <h5>iTrace Students:</h5>
                         <p>
                             <?php
-                            $query = mysqli_query($conn, "SELECT COUNT(*) AS stud FROM user_T WHERE userRole ='Student'") or die ($conn->error);
+                            $query = mysqli_query($conn, "SELECT COUNT(*) AS stud FROM user_T WHERE uRole ='Student'") or die ($conn->error);
                             $data=mysqli_fetch_assoc($query);
                             echo "{$data['stud']}";
                             ?>
@@ -51,7 +51,7 @@
                         <h5>iTrace Faculty Members:</h5>
                             <p>
                                 <?php
-                                $query = mysqli_query($conn, "SELECT COUNT(*) AS faculty FROM user_T WHERE userRole ='Faculty'") or die ($conn->error);
+                                $query = mysqli_query($conn, "SELECT COUNT(*) AS faculty FROM user_T WHERE uRole ='Faculty'") or die ($conn->error);
                                 $data=mysqli_fetch_assoc($query);
                                 echo "{$data['faculty']}";
                                 ?>

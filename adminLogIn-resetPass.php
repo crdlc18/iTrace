@@ -16,9 +16,9 @@
     require('db_con/connection.php');
     if(isset($_GET['token'])){
         $token = $_GET['token'];
-        $get_token = mysqli_query($conn,"SELECT * FROM forgot_pass WHERE token = '$token'") or die($conn->error);
+        $get_token = mysqli_query($conn,"SELECT * FROM forget_t WHERE token = '$token'") or die($conn->error);
         if($admin_email = mysqli_fetch_assoc($get_token)){ 
-            $admin_email = $admin_email["email"];
+            $admin_email = $admin_email["uMail"];
         }
         else{
             echo 'This reset password link has expired.';
@@ -52,14 +52,14 @@
 
 <script>
     $("#ResetBtn").on('click', function(){
-        var email = $("#InputEmail").val();
+        var uMail = $("#InputEmail").val();
         var password = $("#InputPass").val();
         var confirmPassword = $("#ConfirmPass").val();
     
         $.ajax({
             url: 'adminLogIn-resetPassConfirm.php',
             type: 'post',
-            data:{email:email,password:password,confirmPassword:confirmPassword},
+            data:{uMail:uMail,password:password,confirmPassword:confirmPassword},
             dataType: "text",
             success:function(data){
                 if(data.trim()==='success'){

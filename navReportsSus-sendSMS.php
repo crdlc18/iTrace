@@ -33,8 +33,8 @@ require("db_con/connection.php");
 /*if(isset($_POST['sendSMS'])){
     // identify suspect
     $suspectNo=array();
-    $sql1 = "SELECT * FROM user_t UT JOIN attendlog_hist AH ON
-            UT.RFID_no=AH.RFID_no  WHERE covidStat=1 AND attendDate=?";
+    $sql1 = "SELECT * FROM user_t UT JOIN logsh_t AH ON
+            UT.RFIDno=AH.RFIDno  WHERE covidStat=1 AND logDate=?";
     $result1 = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($result1, $sql1)) {
         
@@ -51,7 +51,7 @@ require("db_con/connection.php");
         if (mysqli_num_rows($res1) > 0){
            
             while ($item = mysqli_fetch_assoc($res1)){
-                 $suspectNo[]= $item['contactNo'];
+                 $suspectNo[]= $item['uContactNo'];
             }
         }
         else{
@@ -61,8 +61,8 @@ require("db_con/connection.php");
 
     //identify close contacts
      $closeContactsNo=array();
-     $sql2 = "SELECT * FROM user_t UT JOIN attendlog_hist AH ON
-             UT.RFID_no=AH.RFID_no  WHERE covidStat=2 AND attendDate=?";
+     $sql2 = "SELECT * FROM user_t UT JOIN logsh_t AH ON
+             UT.RFIDno=AH.RFIDno  WHERE covidStat=2 AND logDate=?";
      $result2 = mysqli_stmt_init($conn);
      if (!mysqli_stmt_prepare($result2, $sql2)) {
          
@@ -78,7 +78,7 @@ require("db_con/connection.php");
          
          if (mysqli_num_rows($res2) > 0){
              while ($item = mysqli_fetch_assoc($res2)){
-                  $closeContactsNo[]= $item['contactNo'];
+                  $closeContactsNo[]= $item['uContactNo'];
              }
          }
          else{

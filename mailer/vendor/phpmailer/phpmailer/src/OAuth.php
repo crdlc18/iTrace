@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHPMailer - PHP email creation and transport class.
+ * PHPMailer - PHP uMail creation and transport class.
  * PHP Version 5.5.
  *
  * @see       https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
@@ -50,8 +50,8 @@ class OAuth implements OAuthTokenProvider
     protected $oauthToken;
 
     /**
-     * The user's email address, usually used as the login ID
-     * and also the from address when sending email.
+     * The user's uMail uAddress, usually used as the login ID
+     * and also the from uAddress when sending uMail.
      *
      * @var string
      */

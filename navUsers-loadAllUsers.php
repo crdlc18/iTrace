@@ -3,7 +3,7 @@
 <div class="table-responsive">
 <table id="devicesTbl">
     <thead> 
-        <th>RFID_no</th>
+        <th>RFIDno</th>
         <th>First Name</th> 
         <th>Middle Name</th> 
         <th>Last Name</th> 
@@ -24,12 +24,12 @@
 
                 if (isset($_POST['name'])) { // if loading all users table is based on the search field
                     $searchName = $_POST['name']; //store the name to be searched
-                    $query=mysqli_query($conn, "SELECT * FROM user_T WHERE fName LIKE '%$searchName%' OR
-                                                mName LIKE '%$searchName%' OR sName LIKE '%$searchName%'
-                                                ORDER BY RFID_no DESC") or die ($conn->error);
+                    $query=mysqli_query($conn, "SELECT * FROM user_T WHERE uFN LIKE '%$searchName%' OR
+                                                uMN LIKE '%$searchName%' OR uLN LIKE '%$searchName%'
+                                                ORDER BY RFIDno DESC") or die ($conn->error);
                 }
                 else{ 
-                    $query=mysqli_query($conn, "SELECT * FROM user_T ORDER BY RFID_no DESC") or die ($conn->error);
+                    $query=mysqli_query($conn, "SELECT * FROM user_T ORDER BY RFIDno DESC") or die ($conn->error);
                 }
                 
                 
@@ -44,22 +44,22 @@
                                 echo "<span><i class='glyphicon glyphicon-ok' title='The selected UID'></i></span>";
                             }
 
-                            $RFID_no= $attrib['RFID_no'];
+                            $RFID_no= $attrib['RFIDno'];
 
                             echo"<form method='post' action=''>
                                         <button type='button' class='selectedBtn' id='{$RFID_no}'title ='select this UID'> $RFID_no </button>
                                     </form>";
                             echo"<td>";
-                            echo"<td>{$attrib['fName']}</td>
-                                <td>{$attrib['mName']}</td>
-                                <td>{$attrib['sName']}</td>
-                                <td>{$attrib['gender']}</td>
-                                <td>{$attrib['userRole']}</td>
-                                <td>{$attrib['roleID']}</td>
-                                <td>{$attrib['dept']}</td>
-                                <td>{$attrib['email']}</td>
-                                <td>{$attrib['contactNo']}</td>
-                                <td>{$attrib['address']}</td>
+                            echo"<td>{$attrib['uFN']}</td>
+                                <td>{$attrib['uMN']}</td>
+                                <td>{$attrib['uLN']}</td>
+                                <td>{$attrib['uGender']}</td>
+                                <td>{$attrib['uRole']}</td>
+                                <td>{$attrib['uID']}</td>
+                                <td>{$attrib['uDept']}</td>
+                                <td>{$attrib['uMail']}</td>
+                                <td>{$attrib['uContactNo']}</td>
+                                <td>{$attrib['uAddress']}</td>
                                 ";
                         echo"</tr>";            
                     } 

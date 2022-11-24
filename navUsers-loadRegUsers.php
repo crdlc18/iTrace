@@ -4,7 +4,7 @@
 <div style="overflow: scroll;">
     <table class="table table-bordered" >
         <thead>
-            <th scope="col">RFID_no</th>
+            <th scope="col">RFIDno</th>
             <th scope="col">First Name</th> 
             <th scope="col">Middle Name</th> 
             <th scope="col">Last Name</th> 
@@ -21,11 +21,11 @@
             <tr>
               <?php
                 require("db_con/connection.php");   
-                $arr = ["RFID_no", "fName", "mName", "sName", "gender", "userRole",
-                        "roleID","dept", "email", "contactNo", "address" ,"regDate"];
+                $arr = ["RFIDno", "uFN", "uMN", "uLN", "uGender", "uRole",
+                        "uID","uDept", "uMail", "uContactNo", "uAddress" ,"regDate"];
                 $ctr=0;
 
-                $query = mysqli_query($conn,"SELECT DISTINCT * FROM user_T WHERE addCard=1") or die($conn->error);
+                $query = mysqli_query($conn,"SELECT DISTINCT * FROM user_T WHERE cardAdd=1") or die($conn->error);
 
                 if(mysqli_num_rows($query)>0){
                   while($content=mysqli_fetch_assoc($query)){ 

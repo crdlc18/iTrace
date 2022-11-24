@@ -57,13 +57,13 @@
                             <input type="text" name="mname" id="mname" placeholder="Middle Name..."><br>
                             <input type="text" name="lname" id="lname" placeholder="Surname..."><br>
                             <input type="text" name="userEmail" id="userEmail" placeholder="Email..."><br>
-                            <input type="text" name="contactNo" id="contactNo" placeholder="Contact Number..."><br>
-                            <input type="text" name="address" id="address" placeholder="Address..."><br>
+                            <input type="text" name="uContactNo" id="uContactNo" placeholder="Contact Number..."><br>
+                            <input type="text" name="uAddress" id="uAddress" placeholder="Address..."><br>
                         </fieldset>
                         <fieldset>
                             <legend>Additional Information</legend>
-                            <input type="radio" name="gender" class="gender" value="Female" checked="checked">Female
-	          	            <input type="radio" name="gender" class="gender" value="Male" >Male
+                            <input type="radio" name="uGender" class="uGender" value="Female" checked="checked">Female
+	          	            <input type="radio" name="uGender" class="uGender" value="Male" >Male
                             <br>
                             <label> User Role:
                                 <select class="roleSel" name="roleSel" id="roleSel">
@@ -73,7 +73,7 @@
                                 </select>
                             </label><br>
                             <label> Student/Faculty ID:
-                                <input type="text" name="roleID" id="roleID">
+                                <input type="text" name="uID" id="uID">
                             </label>
                             <label> Department:
                                 <select class="userDept" name="userDept" id="userDept">
@@ -198,21 +198,21 @@ $(document).on('click', '#user_add', function(){
     var fname = $('#fname').val();
     var mname = $('#mname').val();
     var lname  = $('#lname').val();
-    var email = $('#userEmail').val();
-    var contactNo = $('#contactNo').val();
-    var address = $('#address').val();
+    var uMail = $('#userEmail').val();
+    var uContactNo = $('#uContactNo').val();
+    var uAddress = $('#uAddress').val();
     //additional info
-    var gender = $(".gender:checked").val();
-    var userRole = $('#roleSel option:selected').val();
-    var dept = $('#userDept option:selected').val();
-    var userID= $("#roleID").val();
+    var uGender = $(".uGender:checked").val();
+    var uRole = $('#roleSel option:selected').val();
+    var uDept = $('#userDept option:selected').val();
+    var userID= $("#uID").val();
     var count=$('#count').val();
 
     
 
     //check validity of inputs
-    checkInput(fname, mname, lname, email, contactNo, address, gender,
-                userRole, dept, userID);
+    checkInput(fname, mname, lname, uMail, uContactNo, uAddress, uGender,
+                uRole, uDept, userID);
     
     if (flag==0){
         bootbox.confirm("Do you really want to add this user?", function(result) {
@@ -221,8 +221,8 @@ $(document).on('click', '#user_add', function(){
                     url:'navUsers-config.php',
                     type:'POST',
                     data:{add_user:1, fname:fname, mname:mname, lname:lname,
-                            email:email, contactNo:contactNo, address:address,
-                            gender:gender, userRole:userRole, dept:dept, userID:userID, count:count},
+                            uMail:uMail, uContactNo:uContactNo, uAddress:uAddress,
+                            uGender:uGender, uRole:uRole, uDept:uDept, userID:userID, count:count},
                     success:function(response){
                         
                         if (response == 1) {
@@ -268,19 +268,19 @@ $(document).on('click', '#user_upd', function(){
     var fname = $('#fname').val();
     var mname = $('#mname').val();
     var lname  = $('#lname').val();
-    var email = $('#userEmail').val();
-    var contactNo = $('#contactNo').val();
-    var address = $('#address').val();
+    var uMail = $('#userEmail').val();
+    var uContactNo = $('#uContactNo').val();
+    var uAddress = $('#uAddress').val();
     //additional info
-    var gender = $(".gender:checked").val();
-    var userRole = $('#roleSel option:selected').val();
-    var dept = $('#userDept option:selected').val();
-    var userID= $("#roleID").val();
+    var uGender = $(".uGender:checked").val();
+    var uRole = $('#roleSel option:selected').val();
+    var uDept = $('#userDept option:selected').val();
+    var userID= $("#uID").val();
     var count=$("#count").val();
 
      //check validity of inputs
-     checkInput(fname, mname, lname, email, contactNo, address, gender,
-        userRole, dept, userID);
+     checkInput(fname, mname, lname, uMail, uContactNo, uAddress, uGender,
+        uRole, uDept, userID);
 
     if(flag==0){
         bootbox.confirm("Save changes to user's info?", function(result) {
@@ -290,8 +290,8 @@ $(document).on('click', '#user_upd', function(){
                         url:'navUsers-config.php',
                         type:'POST',
                         data:{update_user:1, fname:fname, mname:mname, lname:lname,
-                                email:email, contactNo:contactNo, address:address,
-                                gender:gender, userRole:userRole, dept:dept, userID:userID, count:count},
+                                uMail:uMail, uContactNo:uContactNo, uAddress:uAddress,
+                                uGender:uGender, uRole:uRole, uDept:uDept, userID:userID, count:count},
                         success:function(response){
                             
                             if (response == 1) {
@@ -376,11 +376,11 @@ $(document).on('click', '#user_upd', function(){
 // ----------------- SELECT USER ----------------------------------------//
 $(document).on('click', '.selectedBtn', function(){
     var el = this;
-    var RFID_no = $(this).attr("id");
+    var RFIDno = $(this).attr("id");
     $.ajax({
     url: 'navUsers-config.php',
     type: 'GET',
-    data: {select: 1, RFID_no: RFID_no},
+    data: {select: 1, RFIDno: RFIDno},
     success: function(response){
 
         $(el).closest('tr').css('background','#70c276');
@@ -394,10 +394,10 @@ $(document).on('click', '.selectedBtn', function(){
         var count = {
             Count : []
         };
-        var fName = {
+        var uFN = {
             Fname : []
         };
-        var mName = {
+        var uMN = {
             Mname : []
         };
         var lName = {
@@ -406,19 +406,19 @@ $(document).on('click', '.selectedBtn', function(){
         var user_gender = {
             User_gender : []
         };
-        var userRole = {
+        var uRole = {
             UserRole: []
         };
-        var roleID = {
+        var uID = {
             RoleID : []
         };
         var userDept = {
             UserDept : []
         };
-        var email = {
+        var uMail = {
             Email : []
         };
-        var contactNo = {
+        var uContactNo = {
             ContactNo : []
         };
         var userAddress = {
@@ -429,17 +429,17 @@ $(document).on('click', '.selectedBtn', function(){
         var len = response.length;
 
         for (var i = 0; i < len; i++) {
-            fName.Fname.push(response[i].fName);
-            mName.Mname.push(response[i].mName);
-            lName.Lname.push(response[i].sName);
-            user_gender.User_gender.push(response[i].gender);
-            userRole.UserRole.push(response[i].userRole);
-            roleID.RoleID.push(response[i].roleID);
-            userDept.UserDept.push(response[i].dept);
-            email.Email.push(response[i].email);
-            num=response[i].contactNo.slice(4,13);
-            contactNo.ContactNo.push(num);
-            userAddress.UserAddress.push(response[i].address);
+            uFN.Fname.push(response[i].uFN);
+            uMN.Mname.push(response[i].uMN);
+            lName.Lname.push(response[i].uLN);
+            user_gender.User_gender.push(response[i].uGender);
+            uRole.UserRole.push(response[i].uRole);
+            uID.RoleID.push(response[i].uID);
+            userDept.UserDept.push(response[i].uDept);
+            uMail.Email.push(response[i].uMail);
+            num=response[i].uContactNo.slice(4,13);
+            uContactNo.ContactNo.push(num);
+            userAddress.UserAddress.push(response[i].uAddress);
             count.Count.push(response[i].count);
         }
 
@@ -451,23 +451,23 @@ $(document).on('click', '.selectedBtn', function(){
 
         $('#count').val(count.Count);
         //user info
-        $('#fname').val(fName.Fname);
-        $('#mname').val( mName.Mname);
+        $('#fname').val(uFN.Fname);
+        $('#mname').val( uMN.Mname);
         $('#lname').val(lName.Lname);
-        $('#userEmail').val(email.Email);
-        $('#contactNo').val(contactNo.ContactNo);
-        $('#address').val(userAddress.UserAddress);
+        $('#userEmail').val(uMail.Email);
+        $('#uContactNo').val(uContactNo.ContactNo);
+        $('#uAddress').val(userAddress.UserAddress);
         //additional info
         if (user_gender.User_gender == 'Female'){
-            $("input[name='gender'][value='Female']").prop("checked", true);
+            $("input[name='uGender'][value='Female']").prop("checked", true);
         }
         else{
-            $("input[name='gender'][value='Male']").prop("checked", true);
+            $("input[name='uGender'][value='Male']").prop("checked", true);
         }
 
-       $('#roleSel').val(userRole.UserRole);
+       $('#roleSel').val(uRole.UserRole);
        $('#userDept').val(userDept.UserDept);
-       $("#roleID").val(roleID.RoleID);
+       $("#uID").val(uID.RoleID);
     },
     error : function(data) {
         console.log(data);
@@ -486,14 +486,14 @@ var flag=0;
 }
 
 $(document).on('keyup', '#userEmail', function(){
-  var email= $(this).val();
+  var uMail= $(this).val();
   var count= $('#count').val();
  
-//check if email is taken
+//check if uMail is taken
 jQuery.ajax({
    url:'navUsers-config.php',
    type:'POST',
-   data:{checkEmail:1, email:email, count:count},
+   data:{checkEmail:1, uMail:uMail, count:count},
    success:function(response){
         
        if(response=='invalid'){
@@ -507,14 +507,14 @@ jQuery.ajax({
 });
 });
 
-$(document).on('keyup', '#contactNo', function(){
-var contactNo= $(this).val();
+$(document).on('keyup', '#uContactNo', function(){
+var uContactNo= $(this).val();
 var count= $('#count').val();
 //check if contact number is taken
 jQuery.ajax({
    url:'navUsers-config.php',
    type:'POST',
-   data:{checkContact:1, contactNo:contactNo, count:count},
+   data:{checkContact:1, uContactNo:uContactNo, count:count},
    success:function(response){
        if(response=='invalid'){
            flag=3;
@@ -528,31 +528,31 @@ jQuery.ajax({
 
 });
 
-function checkInput(fname, mname, lname, email, contactNo, address, gender, userRole, dept, userID){
+function checkInput(fname, mname, lname, uMail, uContactNo, uAddress, uGender, uRole, uDept, userID){
 
 var strng = /^[A-Za-z\s]*$/;
 var numCheck = /^[0-9]+$/; 
 
-if(!fname && !mname && !lname && !email && !contactNo && !address && !userID){
+if(!fname && !mname && !lname && !uMail && !uContactNo && !uAddress && !userID){
     $('#modal .modal-title').html("..Oopss");
     $('#modal .modal-body').html("Please select a user.");
     $('#modal').modal('show');
     flag=1;
 }
-else if(!fname || !mname || !lname || !email || !contactNo||!address||!gender||!userID){
+else if(!fname || !mname || !lname || !uMail || !uContactNo||!uAddress||!uGender||!userID){
     
     $('#modal .modal-title').html("INCOMPLETE INPUT");
     $('#modal .modal-body').html("Please fill up all the fields.");
     $('#modal').modal('show');
     flag=1;
 }
-else if(userRole=='0'){
+else if(uRole=='0'){
     $('#modal .modal-title').html("INVALID USER ROLE");
     $('#modal .modal-body').html("Please select a role .");
     $('#modal').modal('show');
     flag=1;
 }
-else if(dept=='0'){
+else if(uDept=='0'){
     $('#modal .modal-title').html("INVALID DEPARTMENT");
     $('#modal .modal-body').html("Please select a department.");
     $('#modal').modal('show');
@@ -564,7 +564,7 @@ else if(!strng.test(fname)|| !strng.test(fname)|| !strng.test(lname)){
     $('#modal').modal('show');
     flag=1;
 }
-else if (!numCheck.test(contactNo) || !contactNo.length==9){
+else if (!numCheck.test(uContactNo) || !uContactNo.length==9){
     $('#modal .modal-title').html("INVALID CONTACT NUMBER");
     $('#modal .modal-body').html("Contact number should only contain 10 digits");
     $('#modal').modal('show');

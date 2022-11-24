@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHPMailer RFC821 SMTP email transport class.
+ * PHPMailer RFC821 SMTP uMail transport class.
  * PHP Version 5.5.
  *
  * @see       https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
@@ -22,7 +22,7 @@
 namespace PHPMailer\PHPMailer;
 
 /**
- * PHPMailer RFC821 SMTP email transport class.
+ * PHPMailer RFC821 SMTP uMail transport class.
  * Implements RFC 821 SMTP commands and provides some utility methods for sending mail to an SMTP server.
  *
  * @author Chris Ryan
@@ -881,13 +881,13 @@ class SMTP
 
     /**
      * Send an SMTP MAIL command.
-     * Starts a mail transaction from the email address specified in
+     * Starts a mail transaction from the uMail uAddress specified in
      * $from. Returns true if successful or false otherwise. If True
      * the mail transaction is started and then one or more recipient
      * commands may be called followed by a data command.
      * Implements RFC 821: MAIL <SP> FROM:<reverse-path> <CRLF>.
      *
-     * @param string $from Source address of this message
+     * @param string $from Source uAddress of this message
      *
      * @return bool
      */
@@ -929,7 +929,7 @@ class SMTP
      * Returns true if the recipient was accepted false if it was rejected.
      * Implements from RFC 821: RCPT <SP> TO:<forward-path> <CRLF>.
      *
-     * @param string $address The address the message is being sent to
+     * @param string $address The uAddress the message is being sent to
      * @param string $dsn     Comma separated list of DSN notifications. NEVER, SUCCESS, FAILURE
      *                        or DELAY. If you specify NEVER all other notifications are ignored.
      *
@@ -1046,15 +1046,15 @@ class SMTP
 
     /**
      * Send an SMTP SAML command.
-     * Starts a mail transaction from the email address specified in $from.
+     * Starts a mail transaction from the uMail uAddress specified in $from.
      * Returns true if successful or false otherwise. If True
      * the mail transaction is started and then one or more recipient
      * commands may be called followed by a data command. This command
      * will send the message to the users terminal if they are logged
-     * in and send them an email.
+     * in and send them an uMail.
      * Implements RFC 821: SAML <SP> FROM:<reverse-path> <CRLF>.
      *
-     * @param string $from The address the message is from
+     * @param string $from The uAddress the message is from
      *
      * @return bool
      */
@@ -1294,7 +1294,7 @@ class SMTP
     }
 
     /**
-     * Enable or disable VERP address generation.
+     * Enable or disable VERP uAddress generation.
      *
      * @param bool $enabled
      */
@@ -1304,7 +1304,7 @@ class SMTP
     }
 
     /**
-     * Get VERP address generation mode.
+     * Get VERP uAddress generation mode.
      *
      * @return bool
      */

@@ -5,7 +5,7 @@
 <div class="table-responsive">
     <table id="logSummary">
         <thead> 
-            <th>RoomID</th>
+            <th>roomID</th>
             <th>Full Name</th>
             <th>Time-in</th>
             <th>Temperature-In (Celsius)</th>
@@ -29,25 +29,25 @@
                 //Start date filter
                 if (!empty($_POST['startDate'])) {
                     $startDate = $_POST['startDate'];
-                    $_SESSION['queryCondition'] = "attendDate='".$startDate."'";
+                    $_SESSION['queryCondition'] = "logDate='".$startDate."'";
                 }
                 else{
                     $allDate=array();
-                    $query=mysqli_query($conn, "SELECT DISTINCT attendDate FROM attend_log") or die ($conn->error);
+                    $query=mysqli_query($conn, "SELECT DISTINCT logDate FROM logs_t") or die ($conn->error);
                     if(mysqli_num_rows($query)>0){
 
                         while($attrib=mysqli_fetch_assoc($query)){ 
-                            array_push($allDate,$attrib['attendDate']);
+                            array_push($allDate,$attrib['logDate']);
                         }
 
-                        $_SESSION['queryCondition'] = 'attendDate IN ("' . implode('","', $allDate) . '")';
+                        $_SESSION['queryCondition'] = 'logDate IN ("' . implode('","', $allDate) . '")';
                     }
                     
                 }
                 //End date filter
                 if (!empty($_POST['endDate'])) {
                     $endDate = $_POST['endDate'];
-                    $_SESSION['queryCondition'] = "attendDate BETWEEN '".$startDate."' AND '".$endDate."'";
+                    $_SESSION['queryCondition'] = "logDate BETWEEN '".$startDate."' AND '".$endDate."'";
                 }
                 //Time-In filter
                 if ($_POST['time_option'] == "timeInRadio") {
@@ -85,13 +85,13 @@
                 //Department filter
               /*  if ($_POST['deptSel'] != 'allDept') {
                     $deptSel = $_POST['deptSel'];
-                    $_SESSION['queryCondition'] .= " AND dept='".$deptSel."'";
+                    $_SESSION['queryCondition'] .= " AND uDept='".$deptSel."'";
                 }*/
 
                 //User Selection
                 if ($_POST['userSel'] != 'allUser') {
                     $userSel = $_POST['userSel'];
-                    $_SESSION['queryCondition'] .= " AND userRole='".$userSel."'";
+                    $_SESSION['queryCondition'] .= " AND uRole='".$userSel."'";
                    
                 }
 
@@ -102,7 +102,7 @@
 
                 if(!empty($_POST['searchRoom'])){
                     $roomID = $_POST['searchName'];
-                    $_SESSION['queryCondition'] .= " AND RoomID ='$roomID'";
+                    $_SESSION['queryCondition'] .= " AND roomID ='$roomID'";
                 }
             
 
@@ -111,12 +111,12 @@
             /*------------------------- No search filter----------------------------------*/
             if ($_POST['select_date'] == 1) {
                 $startDate = date("2022-11-22");
-                $sql = "SELECT * FROM user_t UT join attend_log A on UT.RFID_no=A.RFID_no ORDER BY attendID DESC";
+                $sql = "SELECT * FROM user_t UT join logs_t A on UT.RFIDno=A.RFIDno ORDER BY logID DESC";
                 
             }
             else{
-                $sql = "SELECT * FROM user_t UT join attend_log A on UT.RFID_no = A.RFID_no
-                        WHERE ".$_SESSION['queryCondition']." ORDER BY attendID DESC";
+                $sql = "SELECT * FROM user_t UT join logs_t A on UT.RFIDno = A.RFIDno
+                        WHERE ".$_SESSION['queryCondition']." ORDER BY logID DESC";
                 
             }
             $result = mysqli_stmt_init($conn);
@@ -131,13 +131,13 @@
                     while ($row = mysqli_fetch_assoc($resultl)){
                 ?>
                         <tr>
-                        <td><?php echo $row['RoomID'];?></td>
+                        <td><?php echo $row['roomID'];?></td>
                         <td><?php echo $row['fullName'];?></td>
                         <td><?php echo $row['timeIn'];?></td>
-                        <td><?php echo $row['InTemp_celsius'];?></td>
+                        <td><?php echo $row['tempIn'];?></td>
                         <td><?php echo $row['timeOut'];?></td>
-                        <td><?php echo $row['OutTemp_celsius'];?></td>
-                        <td><?php echo $row['attendDate'];?></td>
+                        <td><?php echo $row['tempOut'];?></td>
+                        <td><?php echo $row['logDate'];?></td>
                         </tr>
                 <?php
                 }

@@ -94,7 +94,7 @@
             success:function(data){
                 currentPass=data[0].currPass;
                 $('#adminName').val(data[0].name);
-                $('#adminEmail').val(data[0].email);
+                $('#adminEmail').val(data[0].uMail);
             } 
         });
     });
@@ -115,7 +115,7 @@
        }
        else if(!newEmail){
             $('#modal .modal-title').html("..Oooppss");
-            $('#modal .modal-body').html("E-mail address cannot be blank.");
+            $('#modal .modal-body').html("E-mail uAddress cannot be blank.");
             $('#modal').modal('show');
        }
        else if(!currPass && (newPass.length>0||conPass.length>0)){
@@ -203,7 +203,7 @@
                     success:function(data){
                         if(data==='registered'){
                             $('#modal .modal-title').html("..Oopps");
-                            $('#modal .modal-body').html("Email address is already registered.");  
+                            $('#modal .modal-body').html("Email uAddress is already registered.");  
                             $('#modal').modal('show');
                         }
                         else if(data==='success'){

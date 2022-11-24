@@ -37,7 +37,7 @@
                 "yoast/phpunit-polyfills": "^1.0.0"
             },
             "suggest": {
-                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
+                "ext-mbstring": "Needed to send uMail in multibyte encoding charset or decode encoded addresses",
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
                 "psr/log": "For optional PSR-3 debug logging",
@@ -57,21 +57,21 @@
             "authors": [
                 {
                     "name": "Marcus Bointon",
-                    "email": "phpmailer@synchromedia.co.uk"
+                    "uMail": "phpmailer@synchromedia.co.uk"
                 },
                 {
                     "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
+                    "uMail": "jimjag@gmail.com"
                 },
                 {
                     "name": "Andy Prevost",
-                    "email": "codeworxtech@users.sourceforge.net"
+                    "uMail": "codeworxtech@users.sourceforge.net"
                 },
                 {
                     "name": "Brent R. Matzelle"
                 }
             ],
-            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "description": "PHPMailer is a full-featured uMail creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
                 "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.5"

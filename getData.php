@@ -10,7 +10,7 @@
     $RoomID = $_GET['room_id'];
     $temp = $_GET['temp'];
 
-    $sql = "SELECT * FROM dev_t WHERE  RoomID = ?";
+    $sql = "SELECT * FROM dev_t WHERE  roomID = ?";
     $result = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($result, $sql)) { 
         echo "SQL_Error_Select_device";
@@ -22,13 +22,12 @@
         $resultl = mysqli_stmt_get_result($result);
         //device exists
         if ($row = mysqli_fetch_assoc($resultl)){
-            $devMode = $row['DevMode'];
-            $devDept = $row['Dept'];
+            $devMode = $row['deviceMode'];
 
             //ATTENDANCE mode
             if ($devMode == 1){
                 //check if rfid_no exists
-                $sql = "SELECT * FROM user_t WHERE RFID_no =?";
+                $sql = "SELECT * FROM user_t WHERE RFIDno =?";
                 $result = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($result, $sql)) {
                     echo "SQL_Error_Select_card";
@@ -40,15 +39,15 @@
                     $resultl = mysqli_stmt_get_result($result);
                     if ($row = mysqli_fetch_assoc($resultl)){
                         //detected card is registered/added 
-                        if($row['addCard']==1){
-                            //if($row['RoomID']==$RoomID || $row['RoomID'] == 0){
+                        if($row['cardAdd']==1){
+                            //if($row['roomID']==$RoomID || $row['roomID'] == 0){
 
                                 //concatenate the user's full name 
-                                $name = $row['fName']." ".$row['mName']. " " .$row['sName'];
+                                $name = $row['uFN']." ".$row['uMN']. " " .$row['uLN'];
                                 $count = $row['count'];    
 
                                 //select the attendance log record of the user (scanned rfid)
-                                $sql = "SELECT * FROM attend_log WHERE RFID_no=? AND attendDate=? AND card_out=0";
+                                $sql = "SELECT * FROM logs_t WHERE RFIDno=? AND logDate=? AND cardOut=0";
                                 $result = mysqli_stmt_init($conn);
                                 if (!mysqli_stmt_prepare($result, $sql)) {
                                     echo "SQL_Error_Select_logs";
@@ -70,7 +69,7 @@
 
                                         //-------------------------INSERT ATTENDANCE LOG (TIME-IN)-------------------//
                                         $timeOut="00:00:00";
-                                        $sql = "INSERT INTO attend_log(count, RoomID, RFID_no, fullName,  timeIn, InTemp_celsius, timeOut, attendDate) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                                        $sql = "INSERT INTO logs_t(count, roomID, RFIDno, fullName,  timeIn, tempIn, timeOut, logDate) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
                                         $result = mysqli_stmt_init($conn);
                                         if (!mysqli_stmt_prepare($result, $sql)) {
                                             echo "SQL_Error_Select_login1";
@@ -78,7 +77,7 @@
                                         }
                                         else{
                                             $timeout = "00:00:00";
-                                            mysqli_stmt_bind_param($result, "isssdsss", $count, $RoomID, $RFID_no, $name,  $CurTime, $temp, $timeout, $CurDate);
+                                            mysqli_stmt_bind_param($result, "isssssss", $count, $RoomID, $RFID_no, $name,  $CurTime, $temp, $timeout, $CurDate);
                                             mysqli_stmt_execute($result);
 
                                             echo "{$name} is logged in";
@@ -87,7 +86,7 @@
                                     }
                                     else{
                                         /*----------------------- INSERT ATTENDANCE LOG (AS TIME_OUT)-------------------*/
-                                        $sql="UPDATE attend_log SET  timeOut=?, OutTemp_celsius =?, card_out=1 WHERE RFID_no=? AND attendDate=? AND card_out=0";
+                                        $sql="UPDATE logs_t SET  timeOut=?, tempOut =?, cardOut=1 WHERE RFIDno=? AND logDate=? AND cardOut=0";
                                         $result = mysqli_stmt_init($conn);
                                         if (!mysqli_stmt_prepare($result, $sql)) {
                                             echo "SQL_Error_insert_logout1";
@@ -108,7 +107,7 @@
                                 exit();
                             }*/
                         }
-                        else if ($row['addCard'] == 0){
+                        else if ($row['cardAdd'] == 0){
                             echo "user not registerd!";
                             exit();
                         }
@@ -122,7 +121,7 @@
             // ENROLLMENT mode
             else if ($devMode == 0) {
             
-                $sql = "SELECT * FROM user_t WHERE RFID_no=?";
+                $sql = "SELECT * FROM user_t WHERE RFIDno=?";
                 $result = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($result, $sql)) {
                     echo "SQL_Error_Select_card";
@@ -156,7 +155,7 @@
                                 else{
                                     mysqli_stmt_execute($result);
 
-                                    $sql="UPDATE user_t SET isSelected=1 WHERE RFID_no=?";
+                                    $sql="UPDATE user_t SET isSelected=1 WHERE RFIDno=?";
                                     $result = mysqli_stmt_init($conn);
                                     if (!mysqli_stmt_prepare($result, $sql)) {
                                         echo "SQL_Error_insert_An_available_card";
@@ -172,7 +171,7 @@
                                 }
                             }
                             else{
-                                $sql="UPDATE user_t SET isSelected=1 WHERE RFID_no=?";
+                                $sql="UPDATE user_t SET isSelected=1 WHERE RFIDno=?";
                                 $result = mysqli_stmt_init($conn);
                                 if (!mysqli_stmt_prepare($result, $sql)) {
                                     echo "SQL_Error_insert_An_available_card";
@@ -198,7 +197,7 @@
                         }
                         else{
                             mysqli_stmt_execute($result);
-                            $sql = "INSERT INTO user_t (RFID_no, regDate, isSelected) VALUES (?, ?, 1)";
+                            $sql = "INSERT INTO user_t (RFIDno, regDate, isSelected) VALUES (?, ?, 1)";
                             $result = mysqli_stmt_init($conn);
                             if (!mysqli_stmt_prepare($result, $sql)) {
                                 echo "SQL_Error_Select_add";
@@ -206,7 +205,7 @@
                             }
                             else{
 
-                                mysqli_stmt_bind_param($result, "sss", $RFID_no,  $CurDate);
+                                mysqli_stmt_bind_param($result, "ss", $RFID_no,  $CurDate);
                                 mysqli_stmt_execute($result);
 
                                 echo "succesful";

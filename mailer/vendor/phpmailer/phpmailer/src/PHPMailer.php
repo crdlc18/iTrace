@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHPMailer - PHP email creation and transport class.
+ * PHPMailer - PHP uMail creation and transport class.
  * PHP Version 5.5.
  *
  * @see https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
@@ -22,7 +22,7 @@
 namespace PHPMailer\PHPMailer;
 
 /**
- * PHPMailer - PHP email creation and transport class.
+ * PHPMailer - PHP uMail creation and transport class.
  *
  * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
@@ -99,7 +99,7 @@ class PHPMailer
     public $ErrorInfo = '';
 
     /**
-     * The From email address for the message.
+     * The From uMail uAddress for the message.
      *
      * @var string
      */
@@ -115,7 +115,7 @@ class PHPMailer
     /**
      * The envelope sender of the message.
      * This will usually be turned into a Return-Path header by the receiver,
-     * and is the address that bounces will be sent to.
+     * and is the uAddress that bounces will be sent to.
      * If not empty, will be passed via `-f` to sendmail or as the 'MAIL FROM' value over SMTP.
      *
      * @var string
@@ -139,7 +139,7 @@ class PHPMailer
 
     /**
      * The plain-text message body.
-     * This body can be read by mail clients that do not have HTML email
+     * This body can be read by mail clients that do not have HTML uMail
      * capability such as mutt & Eudora.
      * Clients that can read HTML will view the normal Body.
      *
@@ -230,7 +230,7 @@ class PHPMailer
     public $UseSendmailOptions = true;
 
     /**
-     * The email address that a reading confirmation should be sent to, also known as read receipt.
+     * The uMail uAddress that a reading confirmation should be sent to, also known as read receipt.
      *
      * @var string
      */
@@ -483,7 +483,7 @@ class PHPMailer
 
     /**
      * DKIM Identity.
-     * Usually the email address used as the source of the email.
+     * Usually the uMail uAddress used as the source of the uMail.
      *
      * @var string
      */
@@ -541,19 +541,19 @@ class PHPMailer
     /**
      * Callback Action function name.
      *
-     * The function that handles the result of the send email action.
-     * It is called out by send() for each email sent.
+     * The function that handles the result of the send uMail action.
+     * It is called out by send() for each uMail sent.
      *
      * Value can be any php callable: http://www.php.net/is_callable
      *
      * Parameters:
      *   bool $result        result of the send action
-     *   array   $to            email addresses of the recipients
-     *   array   $cc            cc email addresses
-     *   array   $bcc           bcc email addresses
+     *   array   $to            uMail addresses of the recipients
+     *   array   $cc            cc uMail addresses
+     *   array   $bcc           bcc uMail addresses
      *   string  $subject       the subject
-     *   string  $body          the email body
-     *   string  $from          email address of sender
+     *   string  $body          the uMail body
+     *   string  $from          uMail uAddress of sender
      *   string  $extra         extra information of possible use
      *                          "smtp_transaction_id' => last smtp transaction id
      *
@@ -570,7 +570,7 @@ class PHPMailer
     public $XMailer = '';
 
     /**
-     * Which validator to use by default when validating email addresses.
+     * Which validator to use by default when validating uMail addresses.
      * May be a callable to inject your own validator, but there are several built-in validators.
      * The default validator uses PHP's FILTER_VALIDATE_EMAIL filter_var option.
      *
@@ -1000,14 +1000,14 @@ class PHPMailer
     }
 
     /**
-     * Add a "To" address.
+     * Add a "To" uAddress.
      *
-     * @param string $address The email address to send to
+     * @param string $address The uMail uAddress to send to
      * @param string $name
      *
      * @throws Exception
      *
-     * @return bool true on success, false if address already used or invalid in some way
+     * @return bool true on success, false if uAddress already used or invalid in some way
      */
     public function addAddress($address, $name = '')
     {
@@ -1015,14 +1015,14 @@ class PHPMailer
     }
 
     /**
-     * Add a "CC" address.
+     * Add a "CC" uAddress.
      *
-     * @param string $address The email address to send to
+     * @param string $address The uMail uAddress to send to
      * @param string $name
      *
      * @throws Exception
      *
-     * @return bool true on success, false if address already used or invalid in some way
+     * @return bool true on success, false if uAddress already used or invalid in some way
      */
     public function addCC($address, $name = '')
     {
@@ -1030,14 +1030,14 @@ class PHPMailer
     }
 
     /**
-     * Add a "BCC" address.
+     * Add a "BCC" uAddress.
      *
-     * @param string $address The email address to send to
+     * @param string $address The uMail uAddress to send to
      * @param string $name
      *
      * @throws Exception
      *
-     * @return bool true on success, false if address already used or invalid in some way
+     * @return bool true on success, false if uAddress already used or invalid in some way
      */
     public function addBCC($address, $name = '')
     {
@@ -1045,14 +1045,14 @@ class PHPMailer
     }
 
     /**
-     * Add a "Reply-To" address.
+     * Add a "Reply-To" uAddress.
      *
-     * @param string $address The email address to reply to
+     * @param string $address The uMail uAddress to reply to
      * @param string $name
      *
      * @throws Exception
      *
-     * @return bool true on success, false if address already used or invalid in some way
+     * @return bool true on success, false if uAddress already used or invalid in some way
      */
     public function addReplyTo($address, $name = '')
     {
@@ -1060,18 +1060,18 @@ class PHPMailer
     }
 
     /**
-     * Add an address to one of the recipient arrays or to the ReplyTo array. Because PHPMailer
+     * Add an uAddress to one of the recipient arrays or to the ReplyTo array. Because PHPMailer
      * can't validate addresses with an IDN without knowing the PHPMailer::$CharSet (that can still
      * be modified after calling this function), addition of such addresses is delayed until send().
      * Addresses that have been added already return false, but do not throw exceptions.
      *
      * @param string $kind    One of 'to', 'cc', 'bcc', or 'ReplyTo'
-     * @param string $address The email address
-     * @param string $name    An optional username associated with the address
+     * @param string $address The uMail uAddress
+     * @param string $name    An optional username associated with the uAddress
      *
      * @throws Exception
      *
-     * @return bool true on success, false if address already used or invalid in some way
+     * @return bool true on success, false if uAddress already used or invalid in some way
      */
     protected function addOrEnqueueAnAddress($kind, $address, $name)
     {
@@ -1103,7 +1103,7 @@ class PHPMailer
         }
         $params = [$kind, $address, $name];
         //Enqueue addresses with IDN until we know the PHPMailer::$CharSet.
-        //Domain is assumed to be whatever is after the last @ symbol in the address
+        //Domain is assumed to be whatever is after the last @ symbol in the uAddress
         if (static::idnSupported() && $this->has8bitChars(substr($address, ++$pos))) {
             if ('Reply-To' !== $kind) {
                 if (!array_key_exists($address, $this->RecipientsQueue)) {
@@ -1125,16 +1125,16 @@ class PHPMailer
     }
 
     /**
-     * Add an address to one of the recipient arrays or to the ReplyTo array.
+     * Add an uAddress to one of the recipient arrays or to the ReplyTo array.
      * Addresses that have been added already return false, but do not throw exceptions.
      *
      * @param string $kind    One of 'to', 'cc', 'bcc', or 'ReplyTo'
-     * @param string $address The email address to send, resp. to reply to
+     * @param string $address The uMail uAddress to send, resp. to reply to
      * @param string $name
      *
      * @throws Exception
      *
-     * @return bool true on success, false if address already used or invalid in some way
+     * @return bool true on success, false if uAddress already used or invalid in some way
      */
     protected function addAnAddress($kind, $address, $name = '')
     {
@@ -1184,16 +1184,16 @@ class PHPMailer
     }
 
     /**
-     * Parse and validate a string containing one or more RFC822-style comma-separated email addresses
-     * of the form "display name <address>" into an array of name/address pairs.
+     * Parse and validate a string containing one or more RFC822-style comma-separated uMail addresses
+     * of the form "display name <uAddress>" into an array of name/uAddress pairs.
      * Uses the imap_rfc822_parse_adrlist function if the IMAP extension is available.
      * Note that quotes in the name part are removed.
      *
      * @see http://www.andrew.cmu.edu/user/agreen1/testing/mrbs/web/Mail/RFC822.php A more careful implementation
      *
-     * @param string $addrstr The address list string
+     * @param string $addrstr The uAddress list string
      * @param bool   $useimap Whether to use the IMAP extension to parse the list
-     * @param string $charset The charset to use when decoding the address list string.
+     * @param string $charset The charset to use when decoding the uAddress list string.
      *
      * @return array
      */
@@ -1228,7 +1228,7 @@ class PHPMailer
 
                     $addresses[] = [
                         'name' => (property_exists($address, 'personal') ? $address->personal : ''),
-                        'address' => $address->mailbox . '@' . $address->host,
+                        'uAddress' => $address->mailbox . '@' . $address->host,
                     ];
                 }
             }
@@ -1243,7 +1243,7 @@ class PHPMailer
                     if (static::validateAddress($address)) {
                         $addresses[] = [
                             'name' => '',
-                            'address' => $address,
+                            'uAddress' => $address,
                         ];
                     }
                 } else {
@@ -1265,7 +1265,7 @@ class PHPMailer
                         $addresses[] = [
                             //Remove any surrounding quotes and spaces from the name
                             'name' => trim($name, '\'" '),
-                            'address' => $email,
+                            'uAddress' => $email,
                         ];
                     }
                 }
@@ -1280,7 +1280,7 @@ class PHPMailer
      *
      * @param string $address
      * @param string $name
-     * @param bool   $auto    Whether to also set the Sender address, defaults to true
+     * @param bool   $auto    Whether to also set the Sender uAddress, defaults to true
      *
      * @throws Exception
      *
@@ -1320,7 +1320,7 @@ class PHPMailer
     }
 
     /**
-     * Return the Message-ID header of the last email.
+     * Return the Message-ID header of the last uMail.
      * Technically this is the value from the last time the headers were created,
      * but it's also the message ID of the last sent message except in
      * pathological cases.
@@ -1333,13 +1333,13 @@ class PHPMailer
     }
 
     /**
-     * Check that a string looks like an email address.
+     * Check that a string looks like an uMail uAddress.
      * Validation patterns supported:
      * * `auto` Pick best pattern automatically;
      * * `pcre8` Use the squiloople.com pattern, requires PCRE > 8.0;
      * * `pcre` Use old PCRE implementation;
      * * `php` Use PHP built-in FILTER_VALIDATE_EMAIL;
-     * * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
+     * * `html5` Use the pattern given by the HTML5 spec for 'uMail' type form input elements.
      * * `noregex` Don't use a regex: super fast, really dumb.
      * Alternatively you may pass in a callable to inject your own validator, for example:
      *
@@ -1351,7 +1351,7 @@ class PHPMailer
      *
      * You can also set the PHPMailer::$validator static to a callable, allowing built-in methods to use your validator.
      *
-     * @param string          $address       The email address to check
+     * @param string          $address       The uMail uAddress to check
      * @param string|callable $patternselect Which pattern to use
      *
      * @return bool
@@ -1384,7 +1384,7 @@ class PHPMailer
                  *  * IPv6 literals: 'first.last@[IPv6:a1::]'
                  * Not all of these will necessarily work for sending!
                  *
-                 * @see       http://squiloople.com/2009/12/20/email-address-validation/
+                 * @see       http://squiloople.com/2009/12/20/uMail-uAddress-validation/
                  * @copyright 2009-2010 Michael Rushton
                  * Feel free to use and redistribute this code. But please keep this copyright notice.
                  */
@@ -1402,9 +1402,9 @@ class PHPMailer
                 );
             case 'html5':
                 /*
-                 * This is the pattern used in the HTML5 spec for validation of 'email' type form input elements.
+                 * This is the pattern used in the HTML5 spec for validation of 'uMail' type form input elements.
                  *
-                 * @see https://html.spec.whatwg.org/#e-mail-state-(type=email)
+                 * @see https://html.spec.whatwg.org/#e-mail-state-(type=uMail)
                  */
                 return (bool) preg_match(
                     '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}' .
@@ -1429,18 +1429,18 @@ class PHPMailer
     }
 
     /**
-     * Converts IDN in given email address to its ASCII form, also known as punycode, if possible.
+     * Converts IDN in given uMail uAddress to its ASCII form, also known as punycode, if possible.
      * Important: Address must be passed in same encoding as currently set in PHPMailer::$CharSet.
-     * This function silently returns unmodified address if:
+     * This function silently returns unmodified uAddress if:
      * - No conversion is necessary (i.e. domain name is not an IDN, or is already in ASCII form)
      * - Conversion to punycode is impossible (e.g. required PHP functions are not available)
      *   or fails for any reason (e.g. domain contains characters not allowed in an IDN).
      *
      * @see PHPMailer::$CharSet
      *
-     * @param string $address The email address to convert
+     * @param string $address The uMail uAddress to convert
      *
-     * @return string The encoded address in ASCII form
+     * @return string The encoded uAddress in ASCII form
      */
     public function punyencodeAddress($address)
     {
@@ -1708,14 +1708,14 @@ class PHPMailer
         //A space after `-f` is optional, but there is a long history of its presence
         //causing problems, so we don't use one
         //Exim docs: http://www.exim.org/exim-html-current/doc/html/spec_html/ch-the_exim_command_line.html
-        //Sendmail docs: http://www.sendmail.org/~ca/email/man/sendmail.html
+        //Sendmail docs: http://www.sendmail.org/~ca/uMail/man/sendmail.html
         //Qmail docs: http://www.qmail.org/man/man8/qmail-inject.html
         //Example problem: https://www.drupal.org/node/1057954
 
         //PHP 5.6 workaround
         $sendmail_from_value = ini_get('sendmail_from');
         if (empty($this->Sender) && !empty($sendmail_from_value)) {
-            //PHP config has a sender address we can use
+            //PHP config has a sender uAddress we can use
             $this->Sender = ini_get('sendmail_from');
         }
         //CVE-2016-10033, CVE-2016-10045: Don't pass -f if characters will be escaped.
@@ -1754,7 +1754,7 @@ class PHPMailer
                 $addrinfo = static::parseAddresses($toAddr, true, $this->CharSet);
                 $this->doCallback(
                     ($result === 0),
-                    [[$addrinfo['address'], $addrinfo['name']]],
+                    [[$addrinfo['uAddress'], $addrinfo['name']]],
                     $this->cc,
                     $this->bcc,
                     $this->Subject,
@@ -1905,7 +1905,7 @@ class PHPMailer
         //A space after `-f` is optional, but there is a long history of its presence
         //causing problems, so we don't use one
         //Exim docs: http://www.exim.org/exim-html-current/doc/html/spec_html/ch-the_exim_command_line.html
-        //Sendmail docs: http://www.sendmail.org/~ca/email/man/sendmail.html
+        //Sendmail docs: http://www.sendmail.org/~ca/uMail/man/sendmail.html
         //Qmail docs: http://www.qmail.org/man/man8/qmail-inject.html
         //Example problem: https://www.drupal.org/node/1057954
         //CVE-2016-10033, CVE-2016-10045: Don't pass -f if characters will be escaped.
@@ -1913,7 +1913,7 @@ class PHPMailer
         //PHP 5.6 workaround
         $sendmail_from_value = ini_get('sendmail_from');
         if (empty($this->Sender) && !empty($sendmail_from_value)) {
-            //PHP config has a sender address we can use
+            //PHP config has a sender uAddress we can use
             $this->Sender = ini_get('sendmail_from');
         }
         if (!empty($this->Sender) && static::validateAddress($this->Sender)) {
@@ -1930,7 +1930,7 @@ class PHPMailer
                 $addrinfo = static::parseAddresses($toAddr, true, $this->CharSet);
                 $this->doCallback(
                     $result,
-                    [[$addrinfo['address'], $addrinfo['name']]],
+                    [[$addrinfo['uAddress'], $addrinfo['name']]],
                     $this->cc,
                     $this->bcc,
                     $this->Subject,
@@ -2126,7 +2126,7 @@ class PHPMailer
             //The host string prefix can temporarily override the current setting for SMTPSecure
             //If it's not specified, the default value is used
 
-            //Check the host name is a valid name or IP address before trying to use it
+            //Check the host name is a valid name or IP uAddress before trying to use it
             if (!static::isValidHost($hostinfo[2])) {
                 $this->edebug($this->lang('invalid_host') . ' ' . $hostinfo[2]);
                 continue;
@@ -2275,14 +2275,14 @@ class PHPMailer
             'extension_missing' => 'Extension missing: ',
             'file_access' => 'Could not access file: ',
             'file_open' => 'File Error: Could not open file: ',
-            'from_failed' => 'The following From address failed: ',
+            'from_failed' => 'The following From uAddress failed: ',
             'instantiate' => 'Could not instantiate mail function.',
-            'invalid_address' => 'Invalid address: ',
+            'invalid_address' => 'Invalid uAddress: ',
             'invalid_header' => 'Invalid header name or value',
             'invalid_hostentry' => 'Invalid hostentry: ',
             'invalid_host' => 'Invalid host: ',
             'mailer_not_supported' => ' mailer is not supported.',
-            'provide_address' => 'You must provide at least one recipient email address.',
+            'provide_address' => 'You must provide at least one recipient uMail uAddress.',
             'recipients_failed' => 'SMTP Error: The following recipients failed: ',
             'signing' => 'Signing Error: ',
             'smtp_code' => 'SMTP code: ',
@@ -2381,7 +2381,7 @@ class PHPMailer
      *
      * @param string $type
      * @param array  $addr An array of recipients,
-     *                     where each recipient is a 2-element indexed array with element 0 containing an address
+     *                     where each recipient is a 2-element indexed array with element 0 containing an uAddress
      *                     and element 1 containing a name, like:
      *                     [['joe@example.com', 'Joe User'], ['zoe@example.com', 'Zoe User']]
      *
@@ -2398,9 +2398,9 @@ class PHPMailer
     }
 
     /**
-     * Format an address for use in a message header.
+     * Format an uAddress for use in a message header.
      *
-     * @param array $addr A 2-element indexed array, element 0 containing an address, element 1 containing a name like
+     * @param array $addr A 2-element indexed array, element 0 containing an uAddress, element 1 containing a name like
      *                    ['joe@example.com', 'Joe User']
      *
      * @return string
@@ -4088,10 +4088,10 @@ class PHPMailer
     }
 
     /**
-     * Validate whether a string contains a valid value to use as a hostname or IP address.
+     * Validate whether a string contains a valid value to use as a hostname or IP uAddress.
      * IPv6 addresses must include [], e.g. `[::1]`, not just `::1`.
      *
-     * @param string $host The host name or IP address to check
+     * @param string $host The host name or IP uAddress to check
      *
      * @return bool
      */
@@ -4106,14 +4106,14 @@ class PHPMailer
         ) {
             return false;
         }
-        //Looks like a bracketed IPv6 address
+        //Looks like a bracketed IPv6 uAddress
         if (strlen($host) > 2 && substr($host, 0, 1) === '[' && substr($host, -1, 1) === ']') {
             return filter_var(substr($host, 1, -1), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false;
         }
-        //If removing all the dots results in a numeric string, it must be an IPv4 address.
+        //If removing all the dots results in a numeric string, it must be an IPv4 uAddress.
         //Need to check this first because otherwise things like `999.0.0.0` are considered valid host names
         if (is_numeric(str_replace('.', '', $host))) {
-            //Is it a valid IPv4 address?
+            //Is it a valid IPv4 uAddress?
             return filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
         }
         //Is it a syntactically valid hostname (when embeded in a URL)?
@@ -4226,7 +4226,7 @@ class PHPMailer
      * Do not source $message content from user input!
      * $basedir is prepended when handling relative URLs, e.g. <img src="/images/a.png"> and must not be empty
      * will look for an image file in $basedir/images/a.png and convert it to inline.
-     * If you don't provide a $basedir, relative paths will be left untouched (and thus probably break in email)
+     * If you don't provide a $basedir, relative paths will be left untouched (and thus probably break in uMail)
      * Converts data-uri images into embedded attachments.
      * If you don't want to apply these transformations to your HTML, just set Body and AltBody directly.
      *
@@ -4327,7 +4327,7 @@ class PHPMailer
         $this->Body = static::normalizeBreaks($message);
         $this->AltBody = static::normalizeBreaks($this->html2text($message, $advanced));
         if (!$this->alternativeExists()) {
-            $this->AltBody = 'This is an HTML-only message. To view it, activate HTML in your email application.'
+            $this->AltBody = 'This is an HTML-only message. To view it, activate HTML in your uMail application.'
                 . static::$LE;
         }
 

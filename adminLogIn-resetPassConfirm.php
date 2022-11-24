@@ -1,7 +1,7 @@
 <?php
 require ("db_con/connection.php");
-if (isset($_POST['email']) || ($_POST['password']) || ($_POST['confirmPassword'])){
-    $email = $_POST['email'];
+if (isset($_POST['uMail']) || ($_POST['password']) || ($_POST['confirmPassword'])){
+    $email = $_POST['uMail'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
 
@@ -10,8 +10,8 @@ if (isset($_POST['email']) || ($_POST['password']) || ($_POST['confirmPassword']
     }
     else{
         if ($password == $confirmPassword){
-            $update_password = mysqli_query($conn,"UPDATE admin_t SET passwrd = '$password' WHERE adminEmail = '$email'");
-            $delete_token = mysqli_query($conn,"DELETE FROM forgot_pass WHERE adminEmail = '$email'");
+            $update_password = mysqli_query($conn,"UPDATE admin_t SET adminPassword = '$password' WHERE adminEmail = '$email'");
+            $delete_token = mysqli_query($conn,"DELETE FROM forget_t WHERE adminEmail = '$email'");
             echo 'success';
         }
         else{

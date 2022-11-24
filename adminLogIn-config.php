@@ -9,14 +9,14 @@
     $pass=$_POST['pass'];
     $email=$_POST['un'];
     
-    //queries the database if input email exists
+    //queries the database if input uMail exists
     $query = mysqli_query($conn, "SELECT * FROM admin_T WHERE adminEmail = '$email'") or die($conn->error);
   
 
     if(mysqli_affected_rows($conn)>0){ 
 
         $item=mysqli_fetch_array($query);
-        $passwrd=$item['passwrd'];
+        $passwrd=$item['adminPassword'];
         $email=$item['adminEmail'];
         $_SESSION['CurrAdminName'] = $item['adminFullName'];
         $_SESSION['adminID']= $item['adminNo'];
@@ -48,7 +48,7 @@
     else{
       if(mysqli_affected_rows($conn)>0){ 
         global $token = uniqid(md5(time()));
-        $insert_token = mysqli_query($conn,"INSERT INTO forgot_pass(email,token) VALUES ('$adminEmail', '$token')");
+        $insert_token = mysqli_query($conn,"INSERT INTO forget_t(uMail,token) VALUES ('$adminEmail', '$token')");
         echo 'registered';
       }
      
@@ -72,7 +72,7 @@
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
-    //email
+    //uMail
     $adminEmail = $_POST['adminEmail'];
 
     //url
@@ -93,7 +93,7 @@
         $mail->addAddress($adminEmail, $adminEmail);                //Add a recipient
 
         //Content
-        $mail->isHTML(true);                                        //Set email format to HTML
+        $mail->isHTML(true);                                        //Set uMail format to HTML
         $mail->Subject = 'Reset Password';
         $mail->Body    = '<a href="'.$reset_url.'"> Click here </a> to reset your password.';
         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
