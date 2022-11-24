@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2022 at 09:22 PM
+-- Generation Time: Nov 24, 2022 at 05:43 PM
 -- Server version: 10.6.5-MariaDB
 -- PHP Version: 8.0.14
 
@@ -39,7 +39,7 @@ CREATE TABLE `admin_t` (
 --
 
 INSERT INTO `admin_t` (`adminNo`, `adminFullName`, `adminEmail`, `passwrd`) VALUES
-(1, 'Admin', 'admin@gmail.com', 'admin');
+(1, 'admin', 'admin@gmail.com', 'admin');
 
 -- --------------------------------------------------------
 
@@ -64,9 +64,15 @@ CREATE TABLE `attendlog_hist` (
 --
 
 INSERT INTO `attendlog_hist` (`histID`, `RoomID`, `RFID_no`, `fullName`, `timeIn`, `InTemp_celsius`, `timeOut`, `OutTemp_celsius`, `attendDate`) VALUES
-(1, 'E-405', '19816425243', 'Gray', '08:00:00', '37.85', '08:05:00', '37.85', '2022-11-11'),
-(2, 'E-405', '192114934', 'white', '09:00:00', '34.25', '10:00:00', '39.00', '2022-11-13'),
-(3, 'E-405', '227547548', 'Card l', '09:00:00', '34.06', '10:00:00', '35.06', '2022-11-13');
+(1, 'E-405', '19816425243', 'Gray', '08:00:00', '37.85', '08:05:00', '37.85', '2022-11-22'),
+(2, 'E-405', '192114934', 'white', '09:00:00', '34.25', '10:00:00', '39.00', '2022-11-22'),
+(3, 'E-405', '227547548', 'Card l', '09:00:00', '34.06', '10:00:00', '35.06', '2022-11-22'),
+(4, '405', '19816425243', 'Gray', '08:00:00', '37.85', '08:05:00', '37.85', '2022-11-22'),
+(5, '405', '192114934', 'white', '09:00:00', '34.25', '10:00:00', '39.00', '2022-11-22'),
+(6, '405', '227547548', 'Card l', '09:00:00', '34.06', '10:00:00', '0.00', '0000-00-00'),
+(7, '405', '19816425243', 'Gray', '08:00:00', '37.85', '08:05:00', '37.85', '2022-11-22'),
+(8, '405', '192114934', 'white', '09:00:00', '34.25', '10:00:00', '39.00', '2022-11-22'),
+(9, '405', '227547548', 'Card l', '09:00:00', '34.06', '10:00:00', '0.00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -93,9 +99,9 @@ CREATE TABLE `attend_log` (
 --
 
 INSERT INTO `attend_log` (`attendID`, `count`, `RoomID`, `RFID_no`, `fullName`, `timeIn`, `InTemp_celsius`, `timeOut`, `OutTemp_celsius`, `attendDate`, `card_out`) VALUES
-(7, 1, 'E-405', '19816425243', 'Gray', '08:00:00', '37.85', '08:05:00', '37.85', '2022-11-03', 1),
-(8, 2, 'E-405', '192114934', 'white', '09:00:00', '34.25', '10:00:00', '39.00', '2022-11-03', 1),
-(9, 3, 'E-405', '227547548', 'Card l', '09:00:00', '34.06', '10:00:00', '35.06', '2022-11-03', 1);
+(13, 1, '405', '19816425243', 'Gray', '08:00:00', '37.85', '08:05:00', '37.85', '2022-11-22', 1),
+(14, 2, '405', '192114934', 'white', '09:00:00', '34.25', '10:00:00', '39.00', '2022-11-22', 1),
+(15, 3, '405', '227547548', 'Card l', '09:00:00', '34.06', '10:00:00', '0.00', '0000-00-00', 1);
 
 --
 -- Triggers `attend_log`
@@ -115,7 +121,6 @@ DELIMITER ;
 
 CREATE TABLE `dev_t` (
   `RoomID` varchar(5) NOT NULL,
-  `Dept` varchar(50) NOT NULL,
   `DevMode` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -123,9 +128,21 @@ CREATE TABLE `dev_t` (
 -- Dumping data for table `dev_t`
 --
 
-INSERT INTO `dev_t` (`RoomID`, `Dept`, `DevMode`) VALUES
-('E-405', 'Information Technology', 1),
-('E-406', 'Computer Science', 0);
+INSERT INTO `dev_t` (`RoomID`, `DevMode`) VALUES
+('405', 0),
+('406', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forgot_pass`
+--
+
+CREATE TABLE `forgot_pass` (
+  `id` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `token` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -142,7 +159,7 @@ CREATE TABLE `user_t` (
   `gender` varchar(7) DEFAULT NULL,
   `userRole` varchar(10) DEFAULT NULL,
   `roleID` varchar(20) DEFAULT NULL,
-  `dept` varchar(50) NOT NULL,
+  `dept` varchar(50) DEFAULT NULL,
   `email` varchar(30) DEFAULT NULL,
   `contactNo` varchar(13) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
@@ -157,9 +174,9 @@ CREATE TABLE `user_t` (
 --
 
 INSERT INTO `user_t` (`count`, `RFID_no`, `fName`, `mName`, `sName`, `gender`, `userRole`, `roleID`, `dept`, `email`, `contactNo`, `address`, `regDate`, `addCard`, `covidStat`, `isSelected`) VALUES
-(1, '19816425243', 'Gray', 'Gray', 'Grayyy', 'Male', 'Student', '2017-09834-MN-0', 'Computer Science', 'G@gmail.com', '+639976024988', 'Eusebio Bliss Village III, West Bank Rd., Maybunga 1607', '2022-11-12', 1, 0, 1),
-(2, '192114934', 'White', 'W', 'W', 'Female', 'Faculty', '2016-03890-MN-1', 'Information Technology', 'White@gmail.com', '+6390249248', 'Eusebio Bliss Village III, West Bank Rd., Maybunga 1607', '2022-11-12', 1, 0, 0),
-(3, '227547548', 'Card I', 'I', 'I', 'Male', 'Faculty', '2018-06822-MN-1', 'Information Technology', 'l@gmail.com', '+639959006390', '5-A Dr Sixto Antonio Avenue, Rosario, Pasig, Metro Manila 1609', '2022-11-14', 1, 1, 0);
+(1, '19816425243', 'Gray', 'Gray', 'Grayyy', 'Male', 'Student', '2017-09834-MN-0', 'Computer Science', 'grey@gmail.com', '+639959006390', 'Eusebio Bliss Village III, West Bank Rd., Maybunga 1607', '2022-11-24', 1, 1, 1),
+(2, '192114934', 'White', 'W', 'W', 'Female', 'Faculty', '2016-03890-MN-1', 'Information Technology', 'W@gmail.com', '+639959006390', 'Eusebio Bliss Village III, West Bank Rd., Maybunga 1607', '2022-11-24', 1, 1, 0),
+(3, '227547548', 'Card I', 'I', 'I', 'Male', 'Faculty', '2018-06822-MN-1', 'Information Technology', 'light@gmail.com', '+639959006390', '5-A Dr Sixto Antonio Avenue, Rosario, Pasig, Metro Manila 1609', '2022-11-24', 1, 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -192,6 +209,12 @@ ALTER TABLE `dev_t`
   ADD PRIMARY KEY (`RoomID`);
 
 --
+-- Indexes for table `forgot_pass`
+--
+ALTER TABLE `forgot_pass`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user_t`
 --
 ALTER TABLE `user_t`
@@ -205,19 +228,25 @@ ALTER TABLE `user_t`
 -- AUTO_INCREMENT for table `admin_t`
 --
 ALTER TABLE `admin_t`
-  MODIFY `adminNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `adminNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `attendlog_hist`
 --
 ALTER TABLE `attendlog_hist`
-  MODIFY `histID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `histID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `attend_log`
 --
 ALTER TABLE `attend_log`
-  MODIFY `attendID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `attendID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `forgot_pass`
+--
+ALTER TABLE `forgot_pass`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_t`

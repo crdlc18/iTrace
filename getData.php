@@ -198,7 +198,7 @@
                         }
                         else{
                             mysqli_stmt_execute($result);
-                            $sql = "INSERT INTO user_t (RFID_no, Dept, regDate, isSelected) VALUES (?, ?, ?, 1)";
+                            $sql = "INSERT INTO user_t (RFID_no, regDate, isSelected) VALUES (?, ?, 1)";
                             $result = mysqli_stmt_init($conn);
                             if (!mysqli_stmt_prepare($result, $sql)) {
                                 echo "SQL_Error_Select_add";
@@ -206,7 +206,7 @@
                             }
                             else{
 
-                                mysqli_stmt_bind_param($result, "sss", $RFID_no, $devDept,  $CurDate);
+                                mysqli_stmt_bind_param($result, "sss", $RFID_no,  $CurDate);
                                 mysqli_stmt_execute($result);
 
                                 echo "succesful";

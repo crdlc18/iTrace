@@ -23,10 +23,34 @@
 
             <button type="button" id="CancelBtn">Cancel</button>
             <button type="button" id="LogInBtn">LogIn</button>
-            <p class="message" id="forgetPass">Forgot your Password? <a href="#">Reset your password</a></p>
+            <p class="message" id="forgetPass">Forgot your Password?
+                 <a data-bs-toggle="modal" data-bs-target="#forgetPassModal" href="#forgetPassModal">Reset your password</a></p>
         </form>
     </div>
+
     
+    <!--Reset password modal-->
+    <div class="modal fade" id="forgetPassModal" tabindex="-1" style="z-index:1051" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Reset Password</h5>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <label>Email <input type="text" id="adminEmail"></label><br>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="resetPassword()">PROCEED</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
     <!--Modal-->
     <include src = "assets/warningModal.html"></include>
     
@@ -35,13 +59,11 @@
 
 <script>
 
-
+    //-----log in
     $("#LogInBtn").on('click', function(){
 
         var username = $('#InputEmail').val();
-        var pass = $('#InputPass').val();
-    
-        
+        var pass = $('#InputPass').val(); 
         if(username.length==0||pass.length==0){
             $('#modal .modal-title').html("WARNING!");
             $('#modal .modal-body').html("Please complete the input fields.");
@@ -50,8 +72,8 @@
         }
         else{
             jQuery.ajax({
-                url:'login.php',
-                data: {un:username, pass:pass},
+                url:'adminLogIn-config.php',
+                data: {login:1, un:username, pass:pass},
                 type:'post',
                 dataType:"text",
                 success: function(data){
@@ -74,12 +96,39 @@
         }
     });
 
+    //----------RESET PASSWORD FUNCTION
+    function resetPassword(){
+        var adminEmail = $('#adminEmail').val();
+        //working but to be finalized by isabel
+       /* $.ajax({
+            url: 'adminLogIn-config.php', 
+            data:{forgetPass:1, adminEmail:adminEmail},
+            type: 'post',
+            dataType:'text',
+            success:function(data){
+                if(data.trim()==='registered'){
+                    $.ajax({
+                        url: 'adminLogIn-config.php',
+                        data:{sendEmail:1, adminEmail:adminEmail},
+                        type: 'post',
+                        dataType: 'text',
+                        success:function(data){
+                            alert("Procedure on resetting your password has been sent to your email address.");
+                        }
+                    });
+                }
+                else if (data.trim()==='unregistered'){
+                    alert("The email you entered is not registered in the database.");
+                }
+                else if(data.trim()==='empty'){
+                    alert("Field is empty!");
+                }
+            } 
+        });*/
+    }
+
     $("#CancelBtn").on('click', function(){
         window.location.href = "adminLogIn.html";
     });
 
-    $("#forgetPass").on('click', function(){
-        alert("This is an alert message box.");
-        
-    });
 </script>
