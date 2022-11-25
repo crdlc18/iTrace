@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2022 at 07:16 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Nov 25, 2022 at 11:50 AM
+-- Server version: 10.6.5-MariaDB
+-- PHP Version: 8.0.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,6 +31,7 @@ CREATE TABLE `admin_t` (
   `adminNo` int(11) NOT NULL,
   `adminFullName` varchar(90) NOT NULL,
   `adminEmail` varchar(50) NOT NULL,
+  `adminContactNo` varchar(13) NOT NULL,
   `adminPassword` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -38,8 +39,8 @@ CREATE TABLE `admin_t` (
 -- Dumping data for table `admin_t`
 --
 
-INSERT INTO `admin_t` (`adminNo`, `adminFullName`, `adminEmail`, `adminPassword`) VALUES
-(1, 'Admeen Admeenan', 'admin@gmail.com', 'admin');
+INSERT INTO `admin_t` (`adminNo`, `adminFullName`, `adminEmail`, `adminContactNo`, `adminPassword`) VALUES
+(1, 'Admeen Admeenan', 'admin@gmail.com', '+639959006390', 'admin');
 
 -- --------------------------------------------------------
 
@@ -204,7 +205,7 @@ ALTER TABLE `user_t`
 -- AUTO_INCREMENT for table `admin_t`
 --
 ALTER TABLE `admin_t`
-  MODIFY `adminNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `adminNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `forget_t`
@@ -228,7 +229,7 @@ ALTER TABLE `logs_t`
 -- AUTO_INCREMENT for table `user_t`
 --
 ALTER TABLE `user_t`
-  MODIFY `count` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `count` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

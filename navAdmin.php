@@ -43,6 +43,9 @@
                         <input type="text" id="adminName"><br>
                         <label>Admin E-mail: </label><br>
                         <input type="text" id="adminEmail"><br>
+                        <label>Admin Contact Number: </label><br>
+                        <input type="text" id="adminContactNo"><br>
+
                         <h6>---------Password Settings-----------</h6><br>
                         <label>Current Password: </label><br>
                         <input type="password" id="currPass"><br>
@@ -83,6 +86,7 @@
     var currPass='';
     var newPass='';
     var conPass='';
+    var newNumber='';
 
     // load information of the current logged admin
     $(document).ready(function(){
@@ -95,6 +99,7 @@
                 currentPass=data[0].currPass;
                 $('#adminName').val(data[0].name);
                 $('#adminEmail').val(data[0].uMail);
+                $('#adminContactNo').val(data[0].adminNo);
             } 
         });
     });
@@ -107,6 +112,7 @@
         currPass=$('#currPass').val();
         newPass=$('#newPass').val();
         conPass=$('#conPass').val();
+        newNumber= $('#adminContactNo').val();
        
        if(!newName){
             $('#modal .modal-title').html("..Oooppss");
@@ -116,6 +122,11 @@
        else if(!newEmail){
             $('#modal .modal-title').html("..Oooppss");
             $('#modal .modal-body').html("E-mail uAddress cannot be blank.");
+            $('#modal').modal('show');
+       }
+       else if(!newNumber){
+            $('#modal .modal-title').html("..Oooppss");
+            $('#modal .modal-body').html("Please provide your contact number");
             $('#modal').modal('show');
        }
        else if(!currPass && (newPass.length>0||conPass.length>0)){
@@ -140,25 +151,39 @@
                     $('#modal').modal('show');
                 }
                 else{
-                    $('#confirmChangesModal').modal('show');
+                   saveChanges();
                 }
        }
        else{
-             $('#confirmChangesModal').modal('show');
+                saveChanges();
        }
     });
 
     // function for saving the valid updated admin information
     function saveChanges(){
+        
         $.ajax({
             url: "navAdmin-config.php", 
-            data:{saveChanges:1, newName:newName, newEmail:newEmail, newPass:newPass},
+            data:{saveChanges:1, newName:newName, newEmail:newEmail, newPass:newPass, newNumber:newNumber},
             type: "post",
             success:function(data){
-                $('#confirmChangesModal').modal('hide');
-                $('#modal .modal-title').html("Success!");
-                $('#modal .modal-body').html("Your Account has been updated.");  
-                $('#modal').modal('show');
+                console.log(data);
+                if(data==='registeredEm'){
+                    $('#modal .modal-title').html("..Oopps");
+                    $('#modal .modal-body').html("Email address is already registered.");  
+                    $('#modal').modal('show');
+                }
+                else if(data==='registeredNum'){
+                    $('#modal .modal-title').html("..Oopps");
+                    $('#modal .modal-body').html("Contact number is already registered.");  
+                    $('#modal').modal('show');
+                }
+                else if(data==='success'){
+                    $('#modal .modal-title').html("Success!");
+                    $('#modal .modal-body').html("Your Account has been updated.");  
+                    $('#modal').modal('show');
+                }
+                
             } 
         });
     }
@@ -171,25 +196,32 @@
 
     //function for adding new admin
     function addAdmin(){
-        var adminFname = $('#adFname').val() ;
+        var adminFname = $('#adFname').val();
         var adminMname = $('#adMname').val();
         var adminLname = $('#adLname').val();
         var adminName = adminFname + "  " + adminMname+ "  "+ adminLname;
         var adminPass= $('#adPass').val();
         var adminEmail=$('#adEmail').val();
-        var val = /^[A-Za-z\s]*$/;
+        var adminContactNo=$('#adContactNo').val();
+        var stringCheck = /^[A-Za-z\s]*$/;
+        var numCheck = /^[0-9]+$/; 
 
-        if (!adminFname||!adminMname||!adminLname||!adminPass||!adminEmail){
+        if (!adminFname||!adminMname||!adminLname||!adminPass||!adminEmail||!adminContactNo){
             $('#modal .modal-title').html("..Oooppss");
             $('#modal .modal-body').html("Information must be completed.");
             $('#modal').modal('show');
         }
         else{
 
-            if(!val.test(adminFname)|| !val.test(adminLname) ||!val.test(adminMname)){
-                console.log(1);
+            if(!stringCheck.test(adminFname)|| !stringCheck.test(adminLname) ||!stringCheck.test(adminMname)){
+                
                 $('#modal .modal-title').html("..Oooppss");
                 $('#modal .modal-body').html("Name must only contain alphabet characters");
+                $('#modal').modal('show');
+            }
+            else if(!numCheck.test(adminContactNo)|| !adminContactNo.length==9){
+                $('#modal .modal-title').html("..Oooppss");
+                $('#modal .modal-body').html("Contact number should only contain 10 digits");
                 $('#modal').modal('show');
             }
             else{
@@ -197,13 +229,19 @@
                 //add the valid information of the new admin
                 jQuery.ajax({
                     url: "navAdmin-config.php", 
-                    data:{addAdmin:1, adminName:adminName, adminEmail:adminEmail, adminPass:adminPass},
+                    data:{addAdmin:1, adminName:adminName, adminEmail:adminEmail, adminPass:adminPass, adminContactNo:adminContactNo},
                     type: "post",
                     dataType:"text",
                     success:function(data){
-                        if(data==='registered'){
+                        console.log(data);
+                        if(data==='registeredEm'){
                             $('#modal .modal-title').html("..Oopps");
-                            $('#modal .modal-body').html("Email uAddress is already registered.");  
+                            $('#modal .modal-body').html("Email address is already registered.");  
+                            $('#modal').modal('show');
+                        }
+                        else if(data==='registeredNum'){
+                            $('#modal .modal-title').html("..Oopps");
+                            $('#modal .modal-body').html("Contact number is already registered.");  
                             $('#modal').modal('show');
                         }
                         else if(data==='success'){

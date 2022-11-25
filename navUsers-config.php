@@ -231,7 +231,7 @@ if (isset($_GET['select'])) {
 
  if (isset($_POST['checkContact'])){
     $contactNo = "+639".$_POST['uContactNo'];
-    echo"$contactNo";
+    $count = $_POST['count'];
 
     $query = mysqli_query($conn,"SELECT * FROM user_t WHERE uContactNo='$contactNo' AND NOT count='$count'") or die($conn->error);
 

@@ -86,6 +86,27 @@ require("db_con/connection.php");
          }
      }
 
+     //get admin numbers to be notified
+     $adminContactsNo=array();
+     $sql3 = "SELECT adminContactNo FROM admin_t";
+     $result3 = mysqli_stmt_init($conn);
+     if (!mysqli_stmt_prepare($result3, $sql3)) {
+         
+         echo $conn->error;
+         exit();
+     }
+     else{
+         mysqli_stmt_execute($result3); 
+         $res3 = mysqli_stmt_get_result($result3);
+         
+        if (mysqli_num_rows($res3) > 0){
+             while ($item = mysqli_fetch_assoc($res3)){
+                  $adminContactsNo[]= $item['adminContactNo'];
+            }
+        }
+     }
+
+     //notify suspects
      if(!empty($suspectNo)){
       
        $numbers= implode('', $suspectNo);
@@ -127,6 +148,7 @@ require("db_con/connection.php");
     }
 
 
+    //notify closecontacts
    if(!empty($closeContactsNo)){
       
        $numbers= implode('', $closeContactsNo);
@@ -163,6 +185,44 @@ require("db_con/connection.php");
         curl_close ($ch);
         exit; 
     }
+
+    //notify admin/med office
+    if(!empty($adminContactsNo)){
+       $numbers= implode('', $adminContactsNo);
+       $arr = str_split($numbers, '13');
+       $adminNo=implode(',', $arr);
+      
+       $parameters = array (
+            'apikey' => '1Kw5mLhdnhoj5t4dmrCttqy3LfZ4MaH181', //Your API KEY
+            'number' => $adminNo, 
+            'message'=> 'There are new COVID suspects detected. Check the PUP iTrace site to view records.',
+            'sendername'=> 'SEMAPHORE'
+       );
+    
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL,'https://api.semaphore.co/api/v4/messages' );
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+        
+        //Send the parameters set above with the request
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+        
+        // Receive response from server
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        //show server response
+        $output = curl_exec( $ch );
+       
+        if(curl_errno($ch)){
+            $error_msg=curl_error($ch);
+            print_r($error_msg);
+        }
+        else{
+            echo 1;
+        }
+        curl_close ($ch);
+        exit; 
+    }
+
+
 }*/
    
 ?>

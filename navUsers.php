@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -173,7 +174,7 @@ $(document).on('keyup', '#name', function(){
             }).done(function(data){
                 $('#manageUserTbl').html(data);
             });
-        clearInterval();
+       // clearInterval();
     }
     
 });
@@ -227,8 +228,7 @@ $(document).on('click', '#user_add', function(){
                         
                         if (response == 1) {
                             
-                            $('#userInfoField').reset();
-    
+                            $('#userInfoField')[0].reset();
                             $('#modal .modal-title').html("Success!");
                             $('#modal .modal-body').html("User has been added.");
                             $('#modal').modal('show');
@@ -437,7 +437,12 @@ $(document).on('click', '.selectedBtn', function(){
             uID.RoleID.push(response[i].uID);
             userDept.UserDept.push(response[i].uDept);
             uMail.Email.push(response[i].uMail);
-            num=response[i].uContactNo.slice(4,13);
+            if(!response[i].uContactNo){
+                num='';
+            }
+            else{
+                num=response[i].uContactNo.slice(4,13);
+            }
             uContactNo.ContactNo.push(num);
             userAddress.UserAddress.push(response[i].uAddress);
             count.Count.push(response[i].count);
@@ -474,8 +479,6 @@ $(document).on('click', '.selectedBtn', function(){
     }
     });
 });
-
-
 });
 
 
@@ -516,13 +519,12 @@ jQuery.ajax({
    type:'POST',
    data:{checkContact:1, uContactNo:uContactNo, count:count},
    success:function(response){
-       if(response=='invalid'){
+       if($.trim(response)=='invalid'){
            flag=3;
        }
-       else if(response=='valid'){
+       else if($.trim(response)=='valid'){
            flag=0;
-       }
-     
+       } 
    }
 });
 
