@@ -1,8 +1,17 @@
 <?php
 
   require("db_con/connection.php");
+
+  //Import PHPMailer classes into the global namespace
+  //These must be at the top of your script, not inside a function
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\SMTP;
+  use PHPMailer\PHPMailer\Exception;
+
+  //Load Composer's autoloader
+  require 'mailer/vendor/autoload.php';
    
-  $token='';
+  $token= uniqid(md5(time()));
 
   if(isset($_POST['login'])){
 
@@ -11,7 +20,6 @@
     
     //queries the database if input uMail exists
     $query = mysqli_query($conn, "SELECT * FROM admin_T WHERE adminEmail = '$email'") or die($conn->error);
-  
 
     if(mysqli_affected_rows($conn)>0){ 
 
@@ -38,7 +46,7 @@
 
   //working but to be finalized by isabel
 
-  /*if(isset($_POST['forgetPass'])){
+  if(isset($_POST['forgetPass'])){
     $adminEmail=$_POST['adminEmail'];
     $query = mysqli_query($conn, "SELECT * FROM admin_T WHERE adminEmail = '$adminEmail'") or die($conn->error);
 
@@ -47,7 +55,7 @@
     }
     else{
       if(mysqli_affected_rows($conn)>0){ 
-        global $token = uniqid(md5(time()));
+       // global $token = uniqid(md5(time()));
         $insert_token = mysqli_query($conn,"INSERT INTO forget_t(uMail,token) VALUES ('$adminEmail', '$token')");
         echo 'registered';
       }
@@ -59,16 +67,6 @@
   }
 
   if(isset($_POST['sendEmail'])){
-
-    //Import PHPMailer classes into the global namespace
-    //These must be at the top of your script, not inside a function
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-
-    //Load Composer's autoloader
-    require 'mailer/vendor/autoload.php';
-
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
@@ -103,7 +101,7 @@
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-  }*/
+  }
   
   $conn->close();
 

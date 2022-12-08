@@ -100,7 +100,7 @@
     function resetPassword(){
         var adminEmail = $('#adminEmail').val();
         //working but to be finalized by isabel
-       /* $.ajax({
+       $.ajax({
             url: 'adminLogIn-config.php', 
             data:{forgetPass:1, adminEmail:adminEmail},
             type: 'post',
@@ -124,7 +124,7 @@
                     alert("Field is empty!");
                 }
             } 
-        });*/
+        });
     }
 
     $("#CancelBtn").on('click', function(){
