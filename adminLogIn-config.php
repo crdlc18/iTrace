@@ -1,5 +1,4 @@
 <?php
-
   require("db_con/connection.php");
 
   //Import PHPMailer classes into the global namespace
@@ -7,11 +6,16 @@
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
-
   //Load Composer's autoloader
   require 'mailer/vendor/autoload.php';
-   
-  $token= uniqid(md5(time()));
+  
+  //token
+  global $token;
+  $token = uniqid(md5(time()));
+
+  //url
+  $reset_url = "localhost/iTrace/adminLogIn-resetPass.php?token=$token";
+  
 
   if(isset($_POST['login'])){
 
@@ -55,7 +59,6 @@
     }
     else{
       if(mysqli_affected_rows($conn)>0){ 
-       // global $token = uniqid(md5(time()));
         $insert_token = mysqli_query($conn,"INSERT INTO forget_t(uMail,token) VALUES ('$adminEmail', '$token')");
         echo 'registered';
       }
@@ -73,21 +76,17 @@
     //uMail
     $adminEmail = $_POST['adminEmail'];
 
-    //url
-    $reset_url = "localhost/iTrace/resetPassword.php?token=$token";
-
-
     try {
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->SMTPSecure = 'tls';                                  //Enable implicit TLS encryption
         $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-        $mail->Username   = 'ellatilo1218@gmail.com';               //SMTP username
-        $mail->Password   = 'aoiaxtywrqetdcjp';                     //SMTP password
+        $mail->Username   = 'itracepup@gmail.com';                  //SMTP username
+        $mail->Password   = 'anvcmbxayzjuqdoi';                     //SMTP password
 
         //Recipients
-        $mail->setFrom('ellatilo1218@gmail.com', 'PUP iTrace');
+        $mail->setFrom('itracepup@gmail.com', 'PUP iTrace');
         $mail->addAddress($adminEmail, $adminEmail);                //Add a recipient
 
         //Content

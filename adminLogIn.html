@@ -99,7 +99,6 @@
     //----------RESET PASSWORD FUNCTION
     function resetPassword(){
         var adminEmail = $('#adminEmail').val();
-        //working but to be finalized by isabel
        $.ajax({
             url: 'adminLogIn-config.php', 
             data:{forgetPass:1, adminEmail:adminEmail},

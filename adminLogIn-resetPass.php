@@ -16,12 +16,14 @@
     require('db_con/connection.php');
     if(isset($_GET['token'])){
         $token = $_GET['token'];
-        $get_token = mysqli_query($conn,"SELECT * FROM forget_t WHERE token = '$token'") or die($conn->error);
+        $get_token = mysqli_query($conn,"SELECT * FROM forget_t WHERE token LIKE '%$token%'") or die($conn->error);
         if($admin_email = mysqli_fetch_assoc($get_token)){ 
             $admin_email = $admin_email["uMail"];
         }
         else{
             echo 'This reset password link has expired.';
+            echo $token;
+            echo $admin_email;
         }
     }
     $conn->close();
@@ -55,7 +57,6 @@
         var uMail = $("#InputEmail").val();
         var password = $("#InputPass").val();
         var confirmPassword = $("#ConfirmPass").val();
-    
         $.ajax({
             url: 'adminLogIn-resetPassConfirm.php',
             type: 'post',
@@ -71,6 +72,7 @@
                 }
                 else if(data.trim()==='empty'){
                     alert('Fields cannot be empty!');
+
                 }
             }
         });

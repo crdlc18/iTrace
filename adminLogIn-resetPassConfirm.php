@@ -10,8 +10,9 @@ if (isset($_POST['uMail']) || ($_POST['password']) || ($_POST['confirmPassword']
     }
     else{
         if ($password == $confirmPassword){
+            $delete_token = mysqli_query($conn,"DELETE FROM forget_t WHERE uMail = '$email'");
             $update_password = mysqli_query($conn,"UPDATE admin_t SET adminPassword = '$password' WHERE adminEmail = '$email'");
-            $delete_token = mysqli_query($conn,"DELETE FROM forget_t WHERE adminEmail = '$email'");
+            
             echo 'success';
         }
         else{
